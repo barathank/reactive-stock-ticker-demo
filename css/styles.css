@@ -1,0 +1,25 @@
+.loss {
+  color: red;
+}
+
+#main {
+  float: left;
+  width: 35%;
+}
+
+.btn-group {
+  width: 100%;
+}
+
+.table .btn {
+  width: 100%
+}
+
+#scoreboard {
+  float: right;
+  width: 65%;
+}
+
+#scoreboard td {
+  border: 1px black solid;
+}
