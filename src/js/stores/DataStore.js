@@ -3,22 +3,33 @@ var EventEmitter = require('events').EventEmitter;
 var Constants = require('../constants/AppConstants');
 var merge = require('react/lib/merge');
 
-var _data = {
-  title: null
-};
 
-// add private functions to modify data
-function update(title) {
-  _data.title = title;
+var _data = [];
+
+// API Keys
+var pubnub = PUBNUB.init({
+  subscribe_key : 'demo',
+  publish_key   : 'demo'
+});
+
+function _receiveData(data, raw, symbol) {
+  data.ticker = symbol;
+  data.key = data.time+data.ticker+data.price;
+  data.category = data.perc < 0 ? 'loss' : 'gain';
+  var updated = _data.concat(data);
+  if (updated.length > 10) {
+    updated = updated.slice(1, updated.length);
+  }
+  _data = updated;
+
+  DataStore.emitChange();
 }
 
 var DataStore = merge(EventEmitter.prototype, {
 
-  // public methods used by Controller-View to operate on data
   getAll: function() {
     return _data;
   },
-
 
   // Allow Controller-View to register itself with store
   addChangeListener: function(callback) {
@@ -37,19 +48,19 @@ var DataStore = merge(EventEmitter.prototype, {
   dispatcherIndex: AppDispatcher.register(function(payload) {
     var action = payload.action;
 
-    switch(action.actionType) {
-      case Constants.UPDATE_TITLE:
-        var text = action.text.trim();
-        // NOTE: if this action needs to wait on another store:
-        // DataStore.waitFor([OtherStore.dispatchToken]);
-        // For details, see: http://facebook.github.io/react/blog/2014/07/30/flux-actions-and-the-dispatcher.html#why-we-need-a-dispatcher
-        if (text !== '') {
-          update(text);
-          DataStore.emitChange();
-        }
+    switch(action.type) {
+      case Constants.ActionTypes.STOP_TICKER:
+        pubnub.unsubscribe({
+          channel : payload.action.symbols
+        });
         break;
 
-      // add more cases for other actionTypes...
+      case Constants.ActionTypes.START_TICKER:
+        pubnub.subscribe({
+          channel : payload.action.symbols,
+          message : _receiveData
+        });
+        break;
     }
   })
 

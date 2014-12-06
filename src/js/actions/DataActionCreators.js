@@ -4,11 +4,25 @@ var DataStore = require('../stores/DataStore');
 
 module.exports = {
 
-  updateTitle: function(text) {
-    AppDispatcher.handleViewAction({
-      type: Constants.ActionTypes.UPDATE_TITLE,
+  receiveData: function(text) {
+    AppDispatcher.handleServerAction({
+      type: Constants.ActionTypes.RECEIVE_DATA,
       text: text
     });
+  },
+
+  startTicker: function(symbols) {
+    AppDispatcher.handleViewAction({
+      type: Constants.ActionTypes.START_TICKER,
+      symbols: symbols
+    })
+  },
+
+  stopTicker: function(symbols) {
+    AppDispatcher.handleViewAction({
+      type: Constants.ActionTypes.STOP_TICKER,
+      symbols: symbols
+    })
   }
 
 };

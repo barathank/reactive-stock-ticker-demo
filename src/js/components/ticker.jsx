@@ -1,13 +1,8 @@
 /*** @jsx React.DOM ***/
 "use strict";
 var React = require('react');
-
-// API Keys
-var pubnub = PUBNUB.init({
-  subscribe_key : 'demo',
-  publish_key   : 'demo'
-});
-
+var DataStore = require('../stores/DataStore');
+var ActionCreator = require('../actions/DataActionCreators');
 
 var Ticker = React.createClass({
 
@@ -19,19 +14,17 @@ var Ticker = React.createClass({
     };
   },
 
-  _handleNew: function(data, raw, symbol) {
-    data.ticker = symbol;
-    data.key = data.time+data.ticker+data.price;
-    data.category = data.perc < 0 ? 'loss' : 'gain';
-    var updated = this.state.trx.concat(data);
-    if (updated.length > 10) {
-      updated = updated.slice(1, updated.length);
-    }
-    this.setState({trx: updated});
-  },
-
   componentDidMount: function() {
     this._toggle();
+    DataStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    DataStore.removeChangeListener(this._onChange);
+  },
+
+  _onChange: function() {
+    this.setState({trx: DataStore.getAll()});
   },
 
   _toggle: function() {
@@ -43,18 +36,13 @@ var Ticker = React.createClass({
   },
 
   _startTicker: function() {
-    pubnub.subscribe({
-      channel : this.state.symbols,
-      message : this._handleNew
-    });
+    ActionCreator.startTicker(this.state.symbols);
     this.setState({running: true});
     setTimeout(this._stopTicker, 10000);
   },
 
   _stopTicker: function() {
-    pubnub.unsubscribe({
-      channel : this.state.symbols
-    });
+    ActionCreator.stopTicker(this.state.symbols);
     this.setState({running: false});
   },
 
