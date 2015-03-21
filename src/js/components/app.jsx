@@ -1,6 +1,6 @@
 import React from 'react';
 import Ticker from './ticker.jsx';
-// import MutationReporter from './mutations.jsx';
+import MutationReporter from './mutations.jsx';
 
 const SYMBOLS = ['GOOG', 'AAPL', 'FB'];
 
@@ -31,12 +31,12 @@ export default React.createClass({
 
   render() {
     let {running, data} = this.state;
-    return <div>
-      <Ticker ref="ticker" transactions={data} running={running}
-        onStart={this.startTicker}
-        onStop={this.stopTicker}
-        onReset={this.reset} />
-    </div>;
+    return (
+      <MutationReporter recording="false">
+        <Ticker transactions={data} running={running} onStart={this.startTicker}
+          onStop={this.stopTicker} onReset={this.reset} />
+      </MutationReporter>
+    );
   },
 
   startTicker() {

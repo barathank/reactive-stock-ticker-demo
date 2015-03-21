@@ -18,7 +18,9 @@ export default React.createClass({
       records.forEach(callback);
     });
 
-    this.state.observer.observe(this.props.target, {
+    let target = this.refs.observatory;
+
+    this.state.observer.observe(target.getDOMNode(), {
       childList : true,
       characterData : true,
       attributes: true,
@@ -89,21 +91,26 @@ export default React.createClass({
   render: function() {
     return (
       <div>
-        <div id="graph"></div>
-        <table>
-          <tr>
-            <td>Added</td>
-            <td>Removed</td>
-            <td>Text</td>
-            <td>Attrs</td>
-          </tr>
-          <tr>
-            <td>{this.state.adds}</td>
-            <td>{this.state.removes}</td>
-            <td>{this.state.texts}</td>
-            <td>{this.state.attrs}</td>
-          </tr>
-        </table>
+        <div ref="observatory" id="observatory">
+          {this.props.children}
+        </div>
+        <div id="scoreboard">
+          <div id="graph"></div>
+          <table>
+            <tr>
+              <td>Added</td>
+              <td>Removed</td>
+              <td>Text</td>
+              <td>Attrs</td>
+            </tr>
+            <tr>
+              <td>{this.state.adds}</td>
+              <td>{this.state.removes}</td>
+              <td>{this.state.texts}</td>
+              <td>{this.state.attrs}</td>
+            </tr>
+          </table>
+        </div>
       </div>
     );
   }
