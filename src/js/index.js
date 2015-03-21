@@ -5,4 +5,3 @@ var scoreboard = document.getElementById('scoreboard'),
     main = document.getElementById('main');
 
 React.render(<App />, main);
-// React.renderComponent(<Results data={results} seconds={} />, results);
