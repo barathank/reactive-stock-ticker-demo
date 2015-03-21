@@ -1,8 +1,6 @@
-/*** @jsx React.DOM ***/
+import React from 'react';
 
-var React = require('react');
-
-var MutationReporter = React.createClass({
+export default React.createClass({
   getInitialState: function(){
     return {
       observer: null,
@@ -110,5 +108,3 @@ var MutationReporter = React.createClass({
     );
   }
 });
-
-module.exports = MutationReporter;
