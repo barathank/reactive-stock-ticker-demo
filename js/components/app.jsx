@@ -1,6 +1,7 @@
 import React from 'react';
 import Ticker from './ticker.jsx';
 import MutationReporter from './mutations.jsx';
+import styles from '../../css/styles.css';
 
 const SYMBOLS = ['GOOG', 'AAPL', 'FB'];
 
