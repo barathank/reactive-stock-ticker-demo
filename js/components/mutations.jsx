@@ -69,9 +69,9 @@ export default React.createClass({
           categories: []
         },
         series: [{
-          id: 'adds', name: 'Adds', data: []
+          id: 'adds', name: 'Additions', data: []
         },{
-          id: 'removes', name: 'Removes', data: []
+          id: 'removes', name: 'Removals', data: []
         }]
       });
   },
