@@ -1,18 +1,28 @@
 import React from 'react';
 
+let interval = null;
+
 export default React.createClass({
-  getInitialState: function(){
+  propTypes: {
+    recording: React.PropTypes.bool.isRequired
+  },
+
+  getDefaultProps() {
+    return {
+      recording: false
+    }
+  },
+
+  getInitialState() {
     return {
       observer: null,
       adds: 0,
       removes: 0,
-      texts: 0,
-      attrs: 0,
-      series: []
+      entries: 0
     }
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     var callback = this._handleMutation;
     this.state.observer = new MutationObserver(function(records) {
       records.forEach(callback);
@@ -35,19 +45,20 @@ export default React.createClass({
           animation: Highcharts.svg, // don't animate in old IE
           marginRight: 10,
           events: {
-            load: function () {
+            load () {
               // set up the updating of the chart each second
               var adds = this.get('adds');
               var removes = this.get('removes');
-              var attrs = this.get('attrs');
-              var texts = this.get('text');
-              var interval = setInterval(function () {
+              interval = setInterval(function () {
                 adds.addPoint(_this.state.adds);
                 removes.addPoint(_this.state.removes);
-                attrs.addPoint(_this.state.attrs);
-                texts.addPoint(_this.state.texts);
+                _this.setState({entries: _this.state.entries+1});
+
+                if (_this.state.entries > 10) {
+                  adds.removePoint(0);
+                  removes.removePoint(0);
+                }
               }, 1000);
-              setTimeout(function(){ clearInterval(interval) }, 11000);
             }
           }
         },
@@ -61,15 +72,51 @@ export default React.createClass({
           id: 'adds', name: 'Adds', data: []
         },{
           id: 'removes', name: 'Removes', data: []
-        },{
-          id: 'attrs', name: 'Attrs', data: []
-        },{
-          id: 'text', name: 'Text', data: []
         }]
       });
   },
 
-  _handleMutation: function(mutation) {
+  componentWillReceiveProps(nextProps) {
+    (nextProps.recording)
+      ? this.startRecording()
+      : this.stopRecording();
+  },
+
+  render() {
+    return (
+      <div>
+        <div ref="observatory" id="observatory">
+          {this.props.children}
+        </div>
+        <div id="scoreboard">
+          <div id="graph"></div>
+          <table>
+            <tr>
+              <td>Added</td>
+              <td>Removed</td>
+            </tr>
+            <tr>
+              <td>{this.state.adds}</td>
+              <td>{this.state.removes}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    );
+  },
+
+  stopRecording() {
+    console.log('STOP!');
+    clearInterval(interval);
+  },
+
+  startRecording() {
+    console.log('START!', this.state);
+
+
+  },
+
+  _handleMutation(mutation) {
     switch (mutation.type) {
       case 'childList':
         if (mutation.addedNodes[0] && mutation.addedNodes[0].wholeText) {
@@ -86,32 +133,5 @@ export default React.createClass({
       case 'characterData':
         break;
     }
-  },
-
-  render: function() {
-    return (
-      <div>
-        <div ref="observatory" id="observatory">
-          {this.props.children}
-        </div>
-        <div id="scoreboard">
-          <div id="graph"></div>
-          <table>
-            <tr>
-              <td>Added</td>
-              <td>Removed</td>
-              <td>Text</td>
-              <td>Attrs</td>
-            </tr>
-            <tr>
-              <td>{this.state.adds}</td>
-              <td>{this.state.removes}</td>
-              <td>{this.state.texts}</td>
-              <td>{this.state.attrs}</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    );
   }
 });

@@ -14,7 +14,7 @@ export default React.createClass({
   getInitialState() {
     return {
       data: [],
-      running: false
+      recording: false
     };
   },
 
@@ -30,10 +30,10 @@ export default React.createClass({
   },
 
   render() {
-    let {running, data} = this.state;
+    let {recording, data} = this.state;
     return (
-      <MutationReporter recording="false">
-        <Ticker transactions={data} running={running} onStart={this.startTicker}
+      <MutationReporter recording={recording}>
+        <Ticker transactions={data} recording={recording} onStart={this.startTicker}
           onStop={this.stopTicker} onReset={this.reset} />
       </MutationReporter>
     );
@@ -44,14 +44,14 @@ export default React.createClass({
       channel : this.props.symbols,
       message : this.onReceiveData
     });
-    this.setState({running: true});
+    this.setState({recording: true});
   },
 
   stopTicker() {
     pubnub.unsubscribe({
       channel : this.props.symbols
     });
-    this.setState({running: false});
+    this.setState({recording: false});
   },
 
   reset() {

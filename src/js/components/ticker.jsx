@@ -7,27 +7,27 @@ export default React.createClass({
   getDefaultProps: function(){
     return {
       transactions: [],
-      running: false
+      recording: false
     };
   },
 
   propTypes: {
     transactions: PropTypes.array.isRequired,
-    running: PropTypes.bool.isRequired,
+    recording: PropTypes.bool.isRequired,
     onStart: PropTypes.func.isRequired,
     onStop: PropTypes.func.isRequired,
     onReset: PropTypes.func.isRequired,
   },
 
   render: function() {
-    let {transactions, running, onReset} = this.props;
+    let {transactions, recording, onReset} = this.props;
     return (
       <table className="table table-bordered table-condensed">
         <thead>
           <tr>
             <td colSpan="2">
               <button className="btn btn-primary" onClick={this._toggle}>
-                {running ? 'Stop' : 'Start/Resume'}
+                {recording ? 'Stop' : 'Start/Resume'}
               </button>
             </td>
             <td colSpan="2">
@@ -58,7 +58,7 @@ export default React.createClass({
   },
 
   _toggle(e) {
-    let fn = (this.props.running) ? 'onStop' : 'onStart';
+    let fn = (this.props.recording) ? 'onStop' : 'onStart';
     this.props[fn](e);
   }
 });
