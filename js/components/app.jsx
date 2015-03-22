@@ -45,6 +45,7 @@ export default React.createClass({
       channel : this.props.symbols,
       message : this.onReceiveData
     });
+    setTimeout(this.stopTicker, 10000);
     this.setState({recording: true});
   },
 
