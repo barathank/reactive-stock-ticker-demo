@@ -1,0 +1,36 @@
+parser: babel-eslint
+env:
+  browser: true
+  node: true
+globals:
+  classnames: true
+settings:
+  ecmascript: 6
+  jsx: true
+
+rules:
+  # ERRORS
+  quotes: [2, 'single']
+  space-before-blocks: 2
+  indent: [2, 2, {indentSwitchCase: true}]
+  brace-style: 2
+  space-after-keywords: 2
+  no-comma-dangle: 2
+  no-unused-expressions: 2
+  no-redeclare: 2
+
+  # WARNINGS
+  strict: 0 # temporarily disabled
+  eol-last: 1
+  consistent-return: 1
+  block-scoped-var: 0
+  max-len: [1, 80]
+  no-unused-vars: [1, args: 'none']
+  no-var: 0
+  space-in-brackets: [1, 'never']
+  space-in-parens: [1, 'never']
+  space-infix-ops: 1
+  spaced-line-comment: [1, 'always']
+
+  # DISABLED
+  no-underscore-dangle: [0]
