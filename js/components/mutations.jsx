@@ -10,7 +10,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       recording: false
-    }
+    };
   },
 
   getInitialState() {
@@ -19,10 +19,46 @@ export default React.createClass({
       adds: 0,
       removes: 0,
       entries: 0
-    }
+    };
   },
 
-  componentDidMount() {
+  componentWillReceiveProps(nextProps) {
+    if (this.props.recording === nextProps.recording) { return; };
+    (nextProps.recording)
+      ? this.startRecording()
+      : this.stopRecording();
+  },
+
+  render() {
+    return (
+      <div>
+        <div ref="observatory" id="observatory">
+          {this.props.children}
+        </div>
+        <div id="scoreboard">
+          <div id="graph"></div>
+          <table>
+            <tr>
+              <td>Added</td>
+              <td>Removed</td>
+            </tr>
+            <tr>
+              <td>{this.state.adds}</td>
+              <td>{this.state.removes}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    );
+  },
+
+  stopRecording() {
+    console.log('STOP!');
+    clearInterval(interval);
+  },
+
+  startRecording() {
+    console.log('START!', this.state);
     var callback = this._handleMutation;
     this.state.observer = new MutationObserver(function(records) {
       records.forEach(callback);
@@ -74,45 +110,6 @@ export default React.createClass({
           id: 'removes', name: 'Removals', data: []
         }]
       });
-  },
-
-  componentWillReceiveProps(nextProps) {
-    (nextProps.recording)
-      ? this.startRecording()
-      : this.stopRecording();
-  },
-
-  render() {
-    return (
-      <div>
-        <div ref="observatory" id="observatory">
-          {this.props.children}
-        </div>
-        <div id="scoreboard">
-          <div id="graph"></div>
-          <table>
-            <tr>
-              <td>Added</td>
-              <td>Removed</td>
-            </tr>
-            <tr>
-              <td>{this.state.adds}</td>
-              <td>{this.state.removes}</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    );
-  },
-
-  stopRecording() {
-    console.log('STOP!');
-    clearInterval(interval);
-  },
-
-  startRecording() {
-    console.log('START!', this.state);
-
 
   },
 

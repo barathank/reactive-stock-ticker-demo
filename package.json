@@ -38,5 +38,9 @@
     "test": "jasmine-node spec",
     "start": "node server.js",
     "build": "webpack -p"
+  },
+  "dependencies": {
+    "parse": "^1.4.2",
+    "parse-react": "^0.1.4"
   }
 }
