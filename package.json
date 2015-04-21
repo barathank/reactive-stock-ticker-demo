@@ -22,8 +22,8 @@
   },
   "homepage": "https://github.com/banderson/reactive-stock-ticker-demo",
   "devDependencies": {
-    "babel-core": "^4.7.16",
-    "babel-loader": "^4.2.0",
+    "babel-core": "^5.1.0",
+    "babel-loader": "^5.0.0",
     "css-loader": "^0.9.1",
     "flux": "^2.0.1",
     "jsx-loader": "^0.12.2",
@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "parse": "^1.4.2",
-    "parse-react": "^0.1.4"
+    "parse-react": "^0.1.4",
+    "react-d3": "^0.3.1"
   }
 }

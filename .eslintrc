@@ -4,6 +4,9 @@ env:
   node: true
 globals:
   classnames: true
+  PUBNUB: true
+  Parse: true
+  ParseReact: true
 settings:
   ecmascript: 6
   jsx: true

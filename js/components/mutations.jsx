@@ -23,7 +23,7 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.recording === nextProps.recording) { return; };
+    if (this.props.recording === nextProps.recording) { return; }
     (nextProps.recording)
       ? this.startRecording()
       : this.stopRecording();

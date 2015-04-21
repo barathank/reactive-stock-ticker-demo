@@ -4,7 +4,7 @@ let {PropTypes} = React;
 
 export default React.createClass({
 
-  getDefaultProps: function(){
+  getDefaultProps: function() {
     return {
       transactions: [],
       recording: false
@@ -16,7 +16,7 @@ export default React.createClass({
     recording: PropTypes.bool.isRequired,
     onStart: PropTypes.func.isRequired,
     onStop: PropTypes.func.isRequired,
-    onReset: PropTypes.func.isRequired,
+    onReset: PropTypes.func.isRequired
   },
 
   render: function() {
