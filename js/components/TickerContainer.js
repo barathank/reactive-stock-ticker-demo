@@ -18,23 +18,31 @@ export default React.createClass({
   },
 
   render() {
+    let {recording} = this.props;
     return (
-      <Ticker transactions={this.data.quotes} />
+      <Ticker transactions={this.data.quotes} onStart={this.onStart}
+        onStop={this.onStop} onReset={this.onReset} recording={recording} />
     );
   },
 
-  onStart() {
+  onStart(e) {
     pubnub.subscribe({
       channel: SYMBOLS,
       message: this.onReceiveData
     });
+    this.props.onStart(e);
     setTimeout(this.onStop, 10000);
   },
 
-  onStop() {
+  onStop(e) {
     pubnub.unsubscribe({
       channel: SYMBOLS
     });
+    this.props.onStop(e);
+  },
+
+  onReset(e) {
+    this.props.onReset(e);
   },
 
   onReceiveData(data, raw, symbol) {
