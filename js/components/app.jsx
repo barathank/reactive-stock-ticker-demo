@@ -1,9 +1,6 @@
 import React from 'react';
 import Ticker from './ticker.jsx';
-import MutationReporter from './mutations.jsx';
 import styles from '../../css/styles.css';
-
-const SYMBOLS = ['GOOG', 'AAPL', 'FB'];
 
 // API Keys
 var pubnub = PUBNUB.init({
@@ -21,8 +18,7 @@ export default React.createClass({
 
   getDefaultProps: function () {
     return {
-      autostart: false,
-      symbols: SYMBOLS
+      symbols: ['GOOG', 'AAPL', 'FB']
     }
   },
 
@@ -33,10 +29,8 @@ export default React.createClass({
   render() {
     let {recording, data} = this.state;
     return (
-      <MutationReporter recording={recording}>
-        <Ticker transactions={data} recording={recording} onStart={this.startTicker}
-          onStop={this.stopTicker} onReset={this.reset} />
-      </MutationReporter>
+      <Ticker transactions={data} recording={recording} onStart={this.startTicker}
+        onStop={this.stopTicker} onReset={this.reset} />
     );
   },
 
