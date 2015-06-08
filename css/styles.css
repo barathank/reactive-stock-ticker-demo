@@ -1,11 +1,16 @@
+
+#main {
+  margin: 10px;
+}
+
 .loss {
   color: red;
 }
 
-#observatory {
+/*#observatory {
   float: left;
   width: 35%;
-}
+}*/
 
 .btn-group {
   width: 100%;
@@ -15,10 +20,10 @@
   width: 100%
 }
 
-#scoreboard {
+/*#scoreboard {
   float: right;
   width: 65%;
-}
+}*/
 
 #scoreboard td {
   border: 1px black solid;

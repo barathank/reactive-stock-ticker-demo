@@ -1,4 +1,6 @@
 var webpack = require('webpack');
+var path = require('path');
+var ReactMixinTransformer = require('react-mixin-transformer');
 
 module.exports = {
   entry: [
@@ -14,7 +16,10 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new webpack.ProvidePlugin({
+      ReactDebuggerMixin: path.join(__dirname, './js/components/mixins/highlight')
+    })
   ],
   module: {
     loaders: [
@@ -26,5 +31,11 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.js', 'jsx', '.json']
+  },
+
+  esprima: {
+    transforms: [
+      ReactMixinTransformer.inject(['ReactDebuggerMixin'], false)
+    ]
   }
 };

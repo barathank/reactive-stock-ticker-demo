@@ -1,8 +1,11 @@
-import React from 'react';
+import React from 'react/addons';
+import ReactRenderVisualizer from './mixins/highlight';
 
 let interval = null;
 
 export default React.createClass({
+  mixins: [ReactRenderVisualizer, React.addons.PureRenderMixin],
+
   propTypes: {
     recording: React.PropTypes.bool.isRequired
   },
@@ -44,6 +47,7 @@ export default React.createClass({
         type: 'spline',
           animation: Highcharts.svg, // don't animate in old IE
           marginRight: 10,
+          backgroundColor:'transparent',
           events: {
             load () {
               // set up the updating of the chart each second

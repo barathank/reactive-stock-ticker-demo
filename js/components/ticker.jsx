@@ -1,10 +1,11 @@
 import React from 'react';
+import ReactRenderVisualizer from './mixins/highlight';
 
 let {PropTypes} = React;
 
 export default React.createClass({
 
-  getDefaultProps: function(){
+  getDefaultProps: function() {
     return {
       transactions: [],
       recording: false
@@ -17,6 +18,10 @@ export default React.createClass({
     onStart: PropTypes.func.isRequired,
     onStop: PropTypes.func.isRequired,
     onReset: PropTypes.func.isRequired,
+  },
+
+  getInitialState() {
+    return {};
   },
 
   render: function() {
