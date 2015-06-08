@@ -33,16 +33,20 @@ export default {
       },
       elementHighlightMonitor: {
           outline: '1px solid rgba(47, 150, 180, 1)',
-          backgroundColor: 'rgba(255, 255, 255, 0.2)'
+          backgroundColor: 'rgba(255, 255, 255, 0.4)'
       },
       elementHighlightMount: {
           outline: '3px solid rgba(197, 16, 12, 1)',
-          backgroundColor: 'rgba(197, 16, 12, 0.2)'
+          backgroundColor: 'rgba(197, 16, 12, 0.4)'
       },
       elementHighlightUpdate: {
           outline: '3px solid rgba(197, 203, 1, 1)',
-          backgroundColor: 'rgba(197, 203, 1, 0.2)'
+          backgroundColor: 'rgba(197, 203, 1, 0.4)'
       }
+  },
+
+  getInitialState() {
+    return {};
   },
 
   componentDidMount: function(){
