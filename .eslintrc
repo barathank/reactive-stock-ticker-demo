@@ -4,6 +4,8 @@ env:
   node: true
 globals:
   classnames: true
+  Highcharts: true
+  $: true
 settings:
   ecmascript: 6
   jsx: true

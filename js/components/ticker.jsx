@@ -17,7 +17,7 @@ export default React.createClass({
     recording: PropTypes.bool.isRequired,
     onStart: PropTypes.func.isRequired,
     onStop: PropTypes.func.isRequired,
-    onReset: PropTypes.func.isRequired,
+    onReset: PropTypes.func.isRequired
   },
 
   getInitialState() {

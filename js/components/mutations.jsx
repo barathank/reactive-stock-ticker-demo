@@ -13,7 +13,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       recording: false
-    }
+    };
   },
 
   getInitialState() {
@@ -22,7 +22,7 @@ export default React.createClass({
       adds: 0,
       removes: 0,
       entries: 0
-    }
+    };
   },
 
   componentDidMount() {
@@ -34,10 +34,10 @@ export default React.createClass({
     let target = this.refs.observatory;
 
     this.state.observer.observe(target.getDOMNode(), {
-      childList : true,
-      characterData : true,
+      childList: true,
+      characterData: true,
       attributes: true,
-      subtree : true,
+      subtree: true,
       attributeOldValue: true
     });
 
@@ -47,7 +47,7 @@ export default React.createClass({
         type: 'spline',
           animation: Highcharts.svg, // don't animate in old IE
           marginRight: 10,
-          backgroundColor:'transparent',
+          backgroundColor: 'transparent',
           events: {
             load () {
               // set up the updating of the chart each second
@@ -56,7 +56,7 @@ export default React.createClass({
               interval = setInterval(function () {
                 adds.addPoint(_this.state.adds);
                 removes.addPoint(_this.state.removes);
-                _this.setState({entries: _this.state.entries+1});
+                _this.setState({entries: _this.state.entries + 1});
 
                 if (_this.state.entries > 10) {
                   adds.removePoint(0);
@@ -74,7 +74,7 @@ export default React.createClass({
         },
         series: [{
           id: 'adds', name: 'Additions', data: []
-        },{
+        }, {
           id: 'removes', name: 'Removals', data: []
         }]
       });

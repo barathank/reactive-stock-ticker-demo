@@ -23,7 +23,7 @@ export default React.createClass({
     return {
       autostart: false,
       symbols: SYMBOLS
-    }
+    };
   },
 
   componentWillUnmount() {
@@ -57,7 +57,7 @@ export default React.createClass({
   },
 
   reset() {
-    this.setState({data: []})
+    this.setState({data: []});
   },
 
   onReceiveData(data, raw, symbol) {
