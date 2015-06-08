@@ -1,11 +1,9 @@
 import React from 'react/addons';
-import ReactRenderVisualizer from './mixins/highlight';
+import Totals from './totals.jsx';
 
 let interval = null;
 
 export default React.createClass({
-  mixins: [ReactRenderVisualizer, React.addons.PureRenderMixin],
-
   propTypes: {
     recording: React.PropTypes.bool.isRequired
   },
@@ -87,6 +85,7 @@ export default React.createClass({
   },
 
   render() {
+    const {adds, removes} = this.state;
     return (
       <div>
         <div ref="observatory" id="observatory">
@@ -94,16 +93,7 @@ export default React.createClass({
         </div>
         <div id="scoreboard">
           <div id="graph"></div>
-          <table>
-            <tr>
-              <td>Added</td>
-              <td>Removed</td>
-            </tr>
-            <tr>
-              <td>{this.state.adds}</td>
-              <td>{this.state.removes}</td>
-            </tr>
-          </table>
+          <Totals adds={adds} removes={removes} />
         </div>
       </div>
     );
