@@ -40,5 +40,9 @@
     "test": "jasmine-node spec",
     "start": "node server.js",
     "build": "webpack -p"
+  },
+  "dependencies": {
+    "react-d3": "^0.3.1",
+    "react-render-visualizer": "^0.2.2"
   }
 }
