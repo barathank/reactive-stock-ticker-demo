@@ -11,7 +11,7 @@ import { Connector } from 'redux/react';
 export default React.createClass({
   render() {
     return (
-      <Connector select={state => ({ ...state.TickerStore })}>
+      <Connector select={state => ({ ...state.Ticker })}>
         {this.renderChild}
       </Connector>
     );

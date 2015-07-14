@@ -1,1 +1,1 @@
-export { default as TickerStore } from './TickerStore';
+export { default as Ticker } from './Ticker';
