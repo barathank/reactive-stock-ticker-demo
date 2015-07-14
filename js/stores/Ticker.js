@@ -1,4 +1,4 @@
-import ActionTypes from '../constants/ActionTypes';
+import * as ActionTypes from '../constants/ActionTypes';
 
 let defaultState = {
   recording: false,

@@ -1,4 +1,4 @@
-import ActionTypes from '../constants/ActionTypes';
+import * as ActionTypes from '../constants/ActionTypes';
 
 // API Keys
 const pubnub = PUBNUB.init({
