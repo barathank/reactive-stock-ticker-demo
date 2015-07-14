@@ -8,21 +8,21 @@ let defaultState = {
 export default function(state = defaultState, action) {
   switch (action.type) {
     case ActionTypes.TICKER_STARTED:
-      state.recording = true;
-      return state;
+      return { ...state, recording: true };
+
     case ActionTypes.TICKER_STOPPED:
-      state.recording = false;
-      return state;
+      return { ...state, recording: false };
+
     case ActionTypes.DATA_RECEIVED:
       let updated = state.transactions.concat([action.data]);
       if (updated.length > 10) {
         updated = updated.slice(1, updated.length);
       }
-      state.transactions = updated;
-      return state;
+      return { ...state, transactions: updated };
+
     case ActionTypes.DATA_RESET:
-      state.transactions = [];
-      return state;
+      return { ...state, transactions: [] };
+
     default:
       return state;
   }
