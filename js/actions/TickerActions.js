@@ -1,18 +1,19 @@
 import * as ActionTypes from '../constants/ActionTypes';
 
-// API Keys
+// TODO: move this to an initializable data service
 const pubnub = PUBNUB.init({
   subscribe_key: 'demo',
   publish_key: 'demo'
 });
 const SYMBOLS = ['GOOG', 'AAPL', 'FB'];
 
-
 export function initialize() {
   console.log('App Initialized');
 }
 
+// TODO: best practive for triggering this?
 export function receiveData(data, raw, symbol) {
+  // TODO: move this to a model object
   data.ticker = symbol;
   data.key = data.time+data.ticker+data.price;
   data.category = data.perc < 0 ? 'loss' : 'gain';
