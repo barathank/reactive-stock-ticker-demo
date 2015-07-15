@@ -1,0 +1,4 @@
+export const TICKER_STARTED = 'TICKER_STARTED';
+export const TICKER_STOPPED = 'TICKER_STOPPED';
+export const DATA_RECEIVED = 'DATA_RECEIVED';
+export const DATA_RESET = 'DATA_RESET';
