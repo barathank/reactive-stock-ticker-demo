@@ -1,5 +1,5 @@
 import React from 'react';
-import Ticker from './ticker.jsx';
+import Ticker from './Ticker';
 import styles from '../../css/styles.css';
 import * as Actions from '../actions/TickerActions';
 
