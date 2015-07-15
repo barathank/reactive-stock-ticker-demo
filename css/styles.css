@@ -11,6 +11,10 @@
   width: 100%;
 }
 
+.table {
+  max-width: 50%;
+}
+
 .table .btn {
   width: 100%
 }
