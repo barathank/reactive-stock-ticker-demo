@@ -5,7 +5,7 @@ import styles from '../../css/styles.css';
 import * as Actions from '../actions/TickerActions';
 
 import { bindActionCreators } from 'redux';
-import { Connector } from 'redux/react';
+import { Connector } from 'react-redux';
 
 
 export default React.createClass({

@@ -1,15 +1,15 @@
 import React from 'react';
 import TickerApp from './TickerApp';
-import {createRedux} from 'redux';
-import {Provider} from 'redux/react';
-import * as stores from '../stores/index';
+import {createStore, combineReducers} from 'redux';
+import {Provider} from 'react-redux';
+import * as reducers from '../stores/index';
 
-const redux = createRedux(stores);
+const store = createStore(combineReducers(reducers));
 
 export default React.createClass({
   render() {
     return (
-      <Provider redux={redux}>
+      <Provider store={store}>
         {() => <TickerApp /> }
       </Provider>
     );
