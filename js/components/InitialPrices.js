@@ -6,11 +6,13 @@ export default React.createClass({
   },
 
   render() {
+    // TODO: calculate RSI to get a divide by zero error:
+    // http://stockcharts.com/school/doku.php?id=chart_school:technical_indicators:relative_strength_index_rsi
     const {prices} = this.props;
     return (
       <ul>
         {Object.keys(prices).map(key =>
-          <li>{`${key}: ${prices[key]}`}</li>
+          <li key={key}>{`${key}: ${prices[key]}`}</li>
         )}
       </ul>
     );
