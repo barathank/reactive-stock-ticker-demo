@@ -1,11 +1,11 @@
 import * as ActionTypes from '../constants/ActionTypes';
+import {SYMBOLS} from '../constants/Config';
 
 // TODO: move this to an initializable data service
 const pubnub = PUBNUB.init({
   subscribe_key: 'demo',
   publish_key: 'demo'
 });
-const SYMBOLS = ['GOOG', 'AAPL', 'FB'];
 
 export function initialize() {
   console.log('App Initialized');

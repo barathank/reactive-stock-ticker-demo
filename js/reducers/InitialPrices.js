@@ -11,7 +11,6 @@ export default function(state=defaultState, action) {
       }
       return state;
     case ActionTypes.DATA_RESET:
-      debugger
       return {};
     default:
       return state;

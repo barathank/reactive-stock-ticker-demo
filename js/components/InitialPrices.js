@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {default as InitialPricesFilter} from '../data/filters/InitialPrices';
 
-export default React.createClass({
-  propTypes: {
+@connect(InitialPricesFilter)
+class InitialPrices extends Component {
+  static propTypes = {
     prices: React.PropTypes.object
-  },
+  }
 
   render() {
     // TODO: calculate RSI to get a divide by zero error:
@@ -11,10 +14,12 @@ export default React.createClass({
     const {prices} = this.props;
     return (
       <ul>
-        {Object.keys(prices).map(key =>
-          <li key={key}>{`${key}: ${prices[key]}`}</li>
+        {prices.map(({key, ticker, price}) =>
+          <li key={key}>{`${ticker}: ${price}`}</li>
         )}
       </ul>
     );
   }
-});
+}
+
+export default InitialPrices;

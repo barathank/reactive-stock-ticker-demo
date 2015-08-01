@@ -14,11 +14,7 @@ export default function(state = defaultState, action) {
       return { ...state, recording: false };
 
     case ActionTypes.DATA_RECEIVED:
-      let updated = state.transactions.concat([action.data]);
-      if (updated.length > 10) {
-        updated = updated.slice(1, updated.length);
-      }
-      return { ...state, transactions: updated };
+      return { ...state, transactions: [...state.transactions, action.data] };
 
     case ActionTypes.DATA_RESET:
       return { ...state, transactions: [] };

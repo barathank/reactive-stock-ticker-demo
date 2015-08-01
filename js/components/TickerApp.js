@@ -5,19 +5,14 @@ import styles from '../../css/styles.css';
 import * as Actions from '../actions/TickerActions';
 
 import { bindActionCreators } from 'redux';
-import { Connector } from 'react-redux';
+import { connect } from 'react-redux';
 
+import {default as VisiblePrices} from '../data/filters/VisiblePrices';
 
-export default React.createClass({
+@connect(VisiblePrices)
+export default class TickerApp extends React.Component {
   render() {
-    return (
-      <Connector select={state => ({ ...state.Ticker, initial: {...state.InitialPrices} })}>
-        {this.renderChild}
-      </Connector>
-    );
-  },
-
-  renderChild({ transactions, recording, initial, dispatch }) {
+    const { transactions, recording, dispatch } = this.props;
     const actions = bindActionCreators(Actions, dispatch);
     return (
       <div>
@@ -25,8 +20,8 @@ export default React.createClass({
           onStart={actions.startTicker.bind(null, actions.receiveData)}
           onStop={actions.stopTicker} onReset={actions.reset}
         />
-        <InitialPrices prices={initial} />
+        <InitialPrices />
       </div>
     );
   }
-});
+}
