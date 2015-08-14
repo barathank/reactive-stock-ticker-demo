@@ -9,10 +9,9 @@ import { connect } from 'react-redux';
 
 import {default as VisiblePrices} from '../data/filters/VisiblePrices';
 
-@connect(VisiblePrices)
-export default class TickerApp extends React.Component {
+class TickerApp extends React.Component {
   render() {
-    const { transactions, recording, dispatch } = this.props;
+    const { transactions, stocks, recording, dispatch } = this.props;
     const actions = bindActionCreators(Actions, dispatch);
     return (
       <div>
@@ -20,8 +19,13 @@ export default class TickerApp extends React.Component {
           onStart={actions.startTicker.bind(null, actions.receiveData)}
           onStop={actions.stopTicker} onReset={actions.reset}
         />
-        <InitialPrices />
+        <InitialPrices stocks={stocks} />
       </div>
     );
   }
 }
+
+TickerApp = connect(VisiblePrices)(TickerApp);
+TickerApp = connect(state => ({stocks: state.Stocks}))(TickerApp);
+
+export default TickerApp;

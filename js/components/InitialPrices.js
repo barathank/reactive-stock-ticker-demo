@@ -1,25 +1,18 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {default as InitialPricesFilter} from '../data/filters/InitialPrices';
 
-@connect(InitialPricesFilter)
-class InitialPrices extends Component {
+export default class InitialPrices {
   static propTypes = {
-    prices: React.PropTypes.object
+    stocks: React.PropTypes.object.isRequired
   }
 
   render() {
-    // TODO: calculate RSI to get a divide by zero error:
-    // http://stockcharts.com/school/doku.php?id=chart_school:technical_indicators:relative_strength_index_rsi
-    const {prices} = this.props;
+    const {stocks} = this.props;
     return (
       <ul>
-        {prices.map(({key, ticker, price}) =>
-          <li key={key}>{`${ticker}: ${price}`}</li>
+        {Object.keys(stocks).map(key =>
+          <li key={key}>{key}: {stocks[key].openPrice}</li>
         )}
       </ul>
     );
   }
 }
-
-export default InitialPrices;
