@@ -1,11 +1,10 @@
 import {createSelector} from 'reselect';
 
 export default state => {
-  const {transactions} = state.Ticker;
-  if (transactions.length < 10) {return state.Ticker;}
+  let {all} = state.Transactions;
+  all = (all.length < 10)
+    ? all
+    : all.slice(all.length-10)
 
-  return {
-    ...state.Ticker,
-    transactions: transactions.slice(transactions.length-10)
-  };
+  return {transactions: all};
 }

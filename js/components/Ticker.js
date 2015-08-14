@@ -1,26 +1,29 @@
-import React from 'react';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as Actions from '../actions/TickerActions';
+import VisiblePrices from '../data/filters/VisiblePrices';
 
-let {PropTypes} = React;
+class Ticker extends Component {
+  constructor(props) {
+    super(props);
+    this.actions = bindActionCreators(Actions, props.dispatch);
+    this._toggle = this._toggle.bind(this);
+  }
 
-export default React.createClass({
-
-  getDefaultProps: function(){
-    return {
-      transactions: [],
-      recording: false
-    };
-  },
-
-  propTypes: {
+  static propTypes = {
     transactions: PropTypes.array.isRequired,
-    recording: PropTypes.bool.isRequired,
-    onStart: PropTypes.func.isRequired,
-    onStop: PropTypes.func.isRequired,
-    onReset: PropTypes.func.isRequired,
-  },
+    recording: PropTypes.bool.isRequired
+  }
 
-  render: function() {
-    let {transactions, recording, onReset} = this.props;
+  static defaultProps = {
+    transactions: [],
+    recording: false
+  }
+
+  render() {
+    const {transactions, recording} = this.props;
+
     return (
       <table className="table table-bordered table-condensed">
         <thead>
@@ -31,7 +34,7 @@ export default React.createClass({
               </button>
             </td>
             <td colSpan="2">
-              <button onClick={onReset} className="btn btn-success">
+              <button onClick={this.actions.reset} className="btn btn-success">
                 <i className="glyphicon glyphicon-refresh" /> Reset
               </button>
             </td>
@@ -55,10 +58,14 @@ export default React.createClass({
         </tbody>
       </table>
     );
-  },
+  }
 
   _toggle(e) {
-    let fn = (this.props.recording) ? 'onStop' : 'onStart';
-    this.props[fn](e);
+    this.props.recording
+      ? this.actions.stopTicker(e)
+      : this.actions.startTicker(this.actions.receiveData);
   }
-});
+}
+
+Ticker = connect(state => state.Ticker)(Ticker);
+export default connect(VisiblePrices)(Ticker);

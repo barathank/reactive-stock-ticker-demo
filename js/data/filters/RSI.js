@@ -2,13 +2,14 @@ import {createSelector} from 'reselect';
 import {SYMBOLS} from '../../constants/Config';
 
 const stocks = state => state.Stocks;
-const transactions = state => state.Ticker.transactions;
+const transactions = state => state.Transactions.all;
 const empty = [];
 
+// TODO: change this to not take a stock, but instead map over them all
 const latestTrans = (stock, num) => {
   return createSelector(
-    [transactions],
-    trans => {
+    [transactions, stocks],
+    (trans, stocks) => {
       if (trans.length < num) {
         return empty;
       }
@@ -24,7 +25,7 @@ const latestTrans = (stock, num) => {
   );
 };
 
-function getAverge(trans, stock, num, category) {
+const getAverge = (trans, stock, num, category) => {
   if (trans === empty) {
     return 0;
   }
@@ -32,7 +33,7 @@ function getAverge(trans, stock, num, category) {
     .filter(t => t.category === category)
     .map(t => parseFloat(t.delta))
     .reduce((memo, delta) => memo + delta, 0) / num;
-}
+};
 
 // TODO: calculate RSI to get a divide by zero error:
 // http://stockcharts.com/school/doku.php?id=chart_school:technical_indicators:relative_strength_index_rsi
@@ -55,4 +56,4 @@ export default (stock, num) => {
       return {rsi};
     }
   );
-}
+};
