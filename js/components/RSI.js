@@ -12,7 +12,6 @@ class RSI {
   }
 
   render() {
-    debugger
     const {rsi} = this.props;
     return (
       <h2>GOOG: {rsi}</h2>
