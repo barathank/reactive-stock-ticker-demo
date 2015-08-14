@@ -1,4 +1,4 @@
-import {DATA_RECEIVED} from '../constants/ActionTypes';
+import {DATA_RECEIVED, DATA_RESET} from '../constants/ActionTypes';
 
 let defaultState = {};
 
@@ -14,6 +14,8 @@ export default function(state = defaultState, action) {
         newData = {...state[ticker], currentPrice: price};
       }
       return {...state, [ticker]: newData};
+    case DATA_RESET:
+      return defaultState;
     default:
       return state;
   }
