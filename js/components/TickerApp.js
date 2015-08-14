@@ -1,6 +1,7 @@
 import React from 'react';
 import Ticker from './Ticker';
 import OpeningPrices from './OpeningPrices';
+import RSI from './RSI';
 import * as Actions from '../actions/TickerActions';
 import styles from '../../css/styles.css';
 
@@ -20,6 +21,7 @@ class TickerApp extends React.Component {
           onStop={actions.stopTicker} onReset={actions.reset}
         />
         <OpeningPrices />
+        <RSI />
       </div>
     );
   }
