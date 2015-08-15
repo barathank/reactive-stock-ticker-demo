@@ -12,7 +12,6 @@ export default class ToggleButton {
 
   render() {
     const {recording, ...other} = this.props;
-
     const icon = recording ? 'x' : 'triangle-right';
     return (
       <Button type="primary" {...other}>

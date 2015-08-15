@@ -7,6 +7,8 @@ import VisiblePrices from '../data/filters/VisiblePrices';
 import ToggleButton from './ToggleButton';
 import ResetButton from './ResetButton';
 
+import {Table} from 'elemental';
+
 class Ticker extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +30,7 @@ class Ticker extends Component {
     const {transactions, recording} = this.props;
 
     return (
-      <table className="table table-bordered table-condensed">
+      <Table className="table table-bordered table-condensed">
         <thead>
           <tr>
             <td colSpan="2">
@@ -55,7 +57,7 @@ class Ticker extends Component {
             </tr>
           )}
         </tbody>
-      </table>
+      </Table>
     );
   }
 
