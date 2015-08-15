@@ -29,7 +29,7 @@ const latestTrans = (stock, num) => {
   );
 };
 
-const getAverge = (trans, stock, num, category) => {
+const getAverage = (trans, stock, num, category) => {
   if (trans === empty) {
     return 0;
   }
@@ -49,8 +49,8 @@ export default (stock, num) => {
     (trans) => {
       let rsi = 0;
       if (trans !== empty) {
-        const avgGains = getAverge(trans, stock, num, 'gain');
-        const avgLosses = getAverge(trans, stock, num, 'loss');
+        const avgGains = getAverage(trans, stock, num, 'gain');
+        const avgLosses = getAverage(trans, stock, num, 'loss');
         rsi = (avgLosses === 0)
           ? 100
           : 100 - (100 / 1 + (avgGains/avgLosses));
