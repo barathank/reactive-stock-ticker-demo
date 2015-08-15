@@ -16,10 +16,13 @@ export default class TickerApp {
       <Page>
         <Header>
           <h2>Live Stock Ticker</h2><hr />
-          <p className="lead">This is a page lead, it introduces the proceeding content.</p>
+          <p className="lead">
+            Your one-stop-shop for figuring out nothing about any real,
+            actual financial data.
+          </p>
         </Header>
         <Main>
-          <div className="col-xs-7">
+          <div className="col-xs-8">
             <Ticker />
           </div>
           <Sidebar>
