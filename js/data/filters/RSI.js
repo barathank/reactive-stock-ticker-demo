@@ -50,7 +50,7 @@ export default (stock, num) => {
         const avgLosses = getAverge(trans, stock, num, 'loss');
         rsi = (avgLosses === 0)
           ? 100
-          : avgGains/avgLosses;
+          : 100 - (100 / 1 + (avgGains/avgLosses));
       }
 
       return {rsi};
