@@ -19,4 +19,4 @@ class RSI {
   }
 }
 
-export default connect(RSIFilter('GOOG', 5))(RSI);
+export default connect(RSIFilter('GOOG', 14))(RSI);

@@ -4,16 +4,20 @@ import {SYMBOLS} from '../../constants/Config';
 const stocks = state => state.Stocks;
 const transactions = state => state.Transactions.all;
 const empty = [];
+let count = 0;
+
+const qualifyingTransactions = (num) => {
+  return createSelector(
+    [transactions],
+    trans => (trans.length < num) ? empty : trans
+  );
+};
 
 // TODO: change this to not take a stock, but instead map over them all
 const latestTrans = (stock, num) => {
   return createSelector(
-    [transactions, stocks],
-    (trans, stocks) => {
-      if (trans.length < num) {
-        return empty;
-      }
-
+    [qualifyingTransactions(num)],
+    (trans) => {
       const latest = trans.filter(t => t.ticker === stock);
 
       if (latest.length < num) {
