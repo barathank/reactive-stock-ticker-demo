@@ -4,6 +4,9 @@ import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/TickerActions';
 import VisiblePrices from '../data/filters/VisiblePrices';
 
+import ToggleButton from './ToggleButton';
+import ResetButton from './ResetButton';
+
 class Ticker extends Component {
   constructor(props) {
     super(props);
@@ -29,14 +32,10 @@ class Ticker extends Component {
         <thead>
           <tr>
             <td colSpan="2">
-              <button className="btn btn-primary" onClick={this._toggle}>
-                {recording ? 'Stop' : 'Start/Resume'}
-              </button>
+              <ToggleButton recording={recording} onClick={this._toggle} />
             </td>
             <td colSpan="2">
-              <button onClick={this.actions.reset} className="btn btn-success">
-                <i className="glyphicon glyphicon-refresh" /> Reset
-              </button>
+              <ResetButton onClick={this.actions.reset} />
             </td>
           </tr>
           <tr>

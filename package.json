@@ -39,6 +39,7 @@
     "build": "webpack -p"
   },
   "dependencies": {
+    "elemental": "^0.3.0",
     "lodash": "^3.10.0",
     "react": "^0.13.3",
     "react-redux": "^0.2.2",
