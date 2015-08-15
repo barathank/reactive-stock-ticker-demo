@@ -35,7 +35,6 @@ const getAverge = (trans, stock, num, category) => {
     .reduce((memo, delta) => memo + delta, 0) / num;
 };
 
-// TODO: calculate RSI to get a divide by zero error:
 // http://stockcharts.com/school/doku.php?id=chart_school:technical_indicators:relative_strength_index_rsi
 //               100
 // RSI = 100 - --------
