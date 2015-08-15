@@ -31,6 +31,12 @@ class Ticker extends Component {
 
     return (
       <Table>
+        <colgroup>
+          <col width="25%" />
+          <col width="25%" />
+          <col width="25%" />
+          <col width="25%" />
+        </colgroup>
         <thead>
           <tr>
             <td colSpan="2">
