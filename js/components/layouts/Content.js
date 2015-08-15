@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default class Main {
+export default class Content {
   render() {
     const {children} = this.props;
     return (
-      <div className="row">
+      <div className="col-xs-6">
         {children}
       </div>
     );

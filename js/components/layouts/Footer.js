@@ -1,12 +1,10 @@
 import React from 'react';
 
-export default class Main {
+export default class Footer {
   render() {
     const {children} = this.props;
     return (
-      <div className="row">
-        {children}
-      </div>
+      <hr />
     );
   }
 }

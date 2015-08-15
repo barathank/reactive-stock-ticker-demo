@@ -1,12 +1,12 @@
 import React from 'react';
 
-export default class Main {
+export default class Header {
   render() {
     const {children} = this.props;
     return (
-      <div className="row">
+      <header className="row">
         {children}
-      </div>
+      </header>
     );
   }
 }

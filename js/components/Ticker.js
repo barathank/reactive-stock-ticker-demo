@@ -30,7 +30,7 @@ class Ticker extends Component {
     const {transactions, recording} = this.props;
 
     return (
-      <Table className="table table-bordered table-condensed">
+      <Table>
         <thead>
           <tr>
             <td colSpan="2">
