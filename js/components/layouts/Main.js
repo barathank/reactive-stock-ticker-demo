@@ -4,7 +4,7 @@ export default class Main {
   render() {
     const {children} = this.props;
     return (
-      <div className="row">
+      <div className="row main">
         {children}
       </div>
     );
