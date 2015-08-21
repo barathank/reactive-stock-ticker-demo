@@ -1,7 +1,7 @@
 import {createSelector} from 'reselect';
 import {SYMBOLS} from '../../constants/Config';
 
-const MIN_TRANSACTIONS = 4;
+const MIN_TRANSACTIONS = 2;
 
 const stocks = state => state.Stocks;
 const transactions = state => state.Transactions.all;
@@ -54,12 +54,13 @@ export default createSelector(
       if (trans !== empty) {
         const avgGains = getAverage(trans, MIN_TRANSACTIONS, 'gain');
         const avgLosses = getAverage(trans, MIN_TRANSACTIONS, 'loss');
-        rsi = (avgLosses === 0)
-          ? 100
-          : 100 - (100 / 1 + (avgGains/avgLosses));
+        // rsi = (avgLosses === 0)
+        //   ? 100
+        //   : 100 - (100 / 1 + (avgGains/avgLosses));
+        rsi = 100 - (100 / 1 + (avgGains/avgLosses));
       }
 
-      rsi = rsi !== 0 ? rsi.toFixed(4) : 0;
+      rsi = (rsi === 0 || rsi === 100) ? rsi : rsi.toFixed(2);
 
       return {ticker, rsi};
     });

@@ -11,8 +11,31 @@ export function initialize() {
   console.log('App Initialized');
 }
 
+export function setMinTransactions(num) {
+  return {
+    type: SET_MIN_TRANS,
+    value: num
+  }
+}
 
-// chaos factor
+export function cancelModal() {
+  return {type: ActionTypes.MODAL_CANCELED};
+}
+
+export function openModal() {
+  return {type: ActionTypes.MODAL_OPENED};
+}
+
+export function saveModal(chaos, minTrans) {
+  return (dispatch) => {
+    dispatch({type: ActionTypes.SET_MIN_TRANS, value: minTrans});
+    dispatch({type: ActionTypes.SET_CHAOS, value: chaos});
+    dispatch({type: ActionTypes.MODAL_CANCELED});
+  }
+}
+
+
+// TODO: move all logic to read chaos factor from store
 let chaos = 0.5;
 
 // TODO: best practive for triggering this?
