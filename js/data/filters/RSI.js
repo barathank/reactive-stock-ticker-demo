@@ -1,17 +1,16 @@
 import {createSelector} from 'reselect';
 import {SYMBOLS} from '../../constants/Config';
 
-const MIN_TRANSACTIONS = 2;
-
+const settings = state => state.Ticker;
 const stocks = state => state.Stocks;
 const transactions = state => state.Transactions.all;
 const empty = [];
 
 const qualifyingStocks = createSelector(
-  [stocks],
-  stocks => {
+  [stocks, settings],
+  (stocks, settings) => {
     return Object.keys(stocks).filter(stock =>
-      stocks[stock].numTrans >= MIN_TRANSACTIONS
+      stocks[stock].numTrans >= settings.minTransactions
     );
     // debugger
     // return results.length ? results : empty;
@@ -19,14 +18,14 @@ const qualifyingStocks = createSelector(
 );
 
 const latestTrans = createSelector(
-  [qualifyingStocks, transactions],
-  (stocks, trans) => {
+  [qualifyingStocks, transactions, settings],
+  (stocks, trans, settings) => {
     return stocks.map(stock => {
       const latest = trans.filter(t => t.ticker === stock);
-      if (latest.length < MIN_TRANSACTIONS) {
+      if (latest.length < settings.minTransactions) {
         return empty;
       }
-      return latest.slice(latest.length - MIN_TRANSACTIONS);
+      return latest.slice(latest.length - settings.minTransactions);
     });
   }
 );
@@ -46,14 +45,14 @@ const getAverage = (trans, num, category) => {
 // RSI = 100 - --------
 //              1 + RS     where RS = avgGain / avgLoss
 export default createSelector(
-  [latestTrans],
-  (trans) => {
+  [latestTrans, settings],
+  (trans, settings) => {
     const result = trans.map(trans => {
       const {ticker} = trans[0];
       let rsi = 0;
       if (trans !== empty) {
-        const avgGains = getAverage(trans, MIN_TRANSACTIONS, 'gain');
-        const avgLosses = getAverage(trans, MIN_TRANSACTIONS, 'loss');
+        const avgGains = getAverage(trans, settings.minTransactions, 'gain');
+        const avgLosses = getAverage(trans, settings.minTransactions, 'loss');
         // rsi = (avgLosses === 0)
         //   ? 100
         //   : 100 - (100 / 1 + (avgGains/avgLosses));

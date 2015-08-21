@@ -34,23 +34,20 @@ export function saveModal(chaos, minTrans) {
   }
 }
 
-
-// TODO: move all logic to read chaos factor from store
-let chaos = 0.5;
-
 // TODO: best practive for triggering this?
 export function receiveData(data, raw, symbol) {
-  // TODO: move this to a model object
-  data.ticker = symbol;
-  data.key = data.time+data.ticker+data.price;
-  if (Math.random() > chaos) {
-    data.category = 'loss';
-  } else {
-    data.category = data.perc < 0 ? 'loss' : 'gain';
-  }
-  return {
-    type: ActionTypes.DATA_RECEIVED,
-    data
+  return (dispatch, getState) => {
+    data.ticker = symbol;
+    data.key = data.time+data.ticker+data.price;
+    if (Math.random() > getState().Ticker.chaosFactor) {
+      data.category = 'loss';
+    } else {
+      data.category = data.perc < 0 ? 'loss' : 'gain';
+    }
+    dispatch({
+      type: ActionTypes.DATA_RECEIVED,
+      data
+    });
   };
 }
 
