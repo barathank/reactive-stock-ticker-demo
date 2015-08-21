@@ -26,18 +26,22 @@ class RSI {
 
   render() {
     const {rsi} = this.props;
-    if (!rsi) {
+
+    if (!rsi.length) {
       return this.renderEmpty();
     }
+
     return (
-      <BaseWidget type={rsi > 0 ? 'success' : 'danger'}>
+      <BaseWidget type={rsi.length ? 'success' : 'danger'}>
         <Header>RSI</Header>
         <ul>
-          <li>GOOG: {rsi}</li>
+          {rsi.map(({ticker, rsi}) =>
+            <li>{ticker}: {rsi}</li>
+          )}
         </ul>
       </BaseWidget>
     );
   }
 }
 
-export default connect(RSIFilter('GOOG', 14))(RSI);
+export default connect(RSIFilter)(RSI);

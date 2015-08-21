@@ -1,35 +1,37 @@
 import {createSelector} from 'reselect';
 import {SYMBOLS} from '../../constants/Config';
 
+const MIN_TRANSACTIONS = 4;
+
 const stocks = state => state.Stocks;
 const transactions = state => state.Transactions.all;
 const empty = [];
-let count = 0;
 
-const qualifyingTransactions = (num) => {
-  return createSelector(
-    [transactions],
-    trans => (trans.length < num) ? empty : trans
-  );
-};
+const qualifyingStocks = createSelector(
+  [stocks],
+  stocks => {
+    return Object.keys(stocks).filter(stock =>
+      stocks[stock].numTrans >= MIN_TRANSACTIONS
+    );
+    // debugger
+    // return results.length ? results : empty;
+  }
+);
 
-// TODO: change this to not take a stock, but instead map over them all
-const latestTrans = (stock, num) => {
-  return createSelector(
-    [qualifyingTransactions(num)],
-    (trans) => {
+const latestTrans = createSelector(
+  [qualifyingStocks, transactions],
+  (stocks, trans) => {
+    return stocks.map(stock => {
       const latest = trans.filter(t => t.ticker === stock);
-
-      if (latest.length < num) {
+      if (latest.length < MIN_TRANSACTIONS) {
         return empty;
       }
+      return latest.slice(latest.length - MIN_TRANSACTIONS);
+    });
+  }
+);
 
-      return latest.slice(latest.length - num);
-    }
-  );
-};
-
-const getAverage = (trans, stock, num, category) => {
+const getAverage = (trans, num, category) => {
   if (trans === empty) {
     return 0;
   }
@@ -43,20 +45,25 @@ const getAverage = (trans, stock, num, category) => {
 //               100
 // RSI = 100 - --------
 //              1 + RS     where RS = avgGain / avgLoss
-export default (stock, num) => {
-  return createSelector(
-    [latestTrans(stock, num)],
-    (trans) => {
+export default createSelector(
+  [latestTrans],
+  (trans) => {
+    const result = trans.map(trans => {
+      const {ticker} = trans[0];
       let rsi = 0;
       if (trans !== empty) {
-        const avgGains = getAverage(trans, stock, num, 'gain');
-        const avgLosses = getAverage(trans, stock, num, 'loss');
+        const avgGains = getAverage(trans, MIN_TRANSACTIONS, 'gain');
+        const avgLosses = getAverage(trans, MIN_TRANSACTIONS, 'loss');
         rsi = (avgLosses === 0)
           ? 100
           : 100 - (100 / 1 + (avgGains/avgLosses));
       }
 
-      return {rsi};
-    }
-  );
-};
+      rsi = rsi !== 0 ? rsi.toFixed(4) : 0;
+
+      return {ticker, rsi};
+    });
+
+    return {rsi: result};
+  }
+);
