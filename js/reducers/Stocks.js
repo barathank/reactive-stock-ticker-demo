@@ -9,9 +9,10 @@ export default function(state = defaultState, action) {
       let newData;
       // TODO: create Stock model
       if (!state[ticker]) {
-        newData = {openPrice: price, currentPrice: price};
+        newData = {openPrice: price, currentPrice: price, numTrans: 1};
       } else {
-        newData = {...state[ticker], currentPrice: price};
+        const numTrans = state[ticker].numTrans + 1;
+        newData = {...state[ticker], currentPrice: price, numTrans};
       }
       return {...state, [ticker]: newData};
     case DATA_RESET:

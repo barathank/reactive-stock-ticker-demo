@@ -1,44 +1,29 @@
 import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import * as Actions from '../actions/TickerActions';
-import VisiblePrices from '../data/filters/VisiblePrices';
+import ToggleButton from './ToggleButton';
+import ResetButton from './ResetButton';
+import {Table} from 'elemental';
 
-class Ticker extends Component {
-  constructor(props) {
-    super(props);
-    this.actions = bindActionCreators(Actions, props.dispatch);
-    this._toggle = this._toggle.bind(this);
-  }
-
+export default class Ticker extends Component {
   static propTypes = {
-    transactions: PropTypes.array.isRequired,
-    recording: PropTypes.bool.isRequired
+    transactions: PropTypes.array
   }
 
   static defaultProps = {
-    transactions: [],
-    recording: false
+    transactions: []
   }
 
   render() {
-    const {transactions, recording} = this.props;
+    const {transactions} = this.props;
 
     return (
-      <table className="table table-bordered table-condensed">
+      <Table>
+        <colgroup>
+          <col width="25%" />
+          <col width="25%" />
+          <col width="25%" />
+          <col width="25%" />
+        </colgroup>
         <thead>
-          <tr>
-            <td colSpan="2">
-              <button className="btn btn-primary" onClick={this._toggle}>
-                {recording ? 'Stop' : 'Start/Resume'}
-              </button>
-            </td>
-            <td colSpan="2">
-              <button onClick={this.actions.reset} className="btn btn-success">
-                <i className="glyphicon glyphicon-refresh" /> Reset
-              </button>
-            </td>
-          </tr>
           <tr>
             <th>Time</th>
             <th>Ticker</th>
@@ -56,16 +41,7 @@ class Ticker extends Component {
             </tr>
           )}
         </tbody>
-      </table>
+      </Table>
     );
   }
-
-  _toggle(e) {
-    this.props.recording
-      ? this.actions.stopTicker(e)
-      : this.actions.startTicker(this.actions.receiveData);
-  }
 }
-
-Ticker = connect(state => state.Ticker)(Ticker);
-export default connect(VisiblePrices)(Ticker);

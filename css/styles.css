@@ -1,29 +1,11 @@
-.loss {
-  color: red;
+.container {
+  padding-top: 3em;
 }
 
-#observatory {
-  float: left;
-  width: 35%;
+.main.row {
+  min-height: 500px;
 }
 
-.btn-group {
-  width: 100%;
-}
-
-.table {
-  max-width: 50%;
-}
-
-.table .btn {
-  width: 100%
-}
-
-#scoreboard {
-  float: right;
-  width: 65%;
-}
-
-#scoreboard td {
-  border: 1px black solid;
+tr.loss {
+  background-color: rgba(255, 100, 100, 0.2);
 }
