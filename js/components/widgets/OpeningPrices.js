@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Spinner} from 'elemental';
 
-import OpeningPricesFilter from '../../data/filters/OpeningPrices';
+import OpeningPricesFilter from '../../data/queries/OpeningPrices';
 import BaseWidget from './BaseWidget';
 
 class OpeningPrices {

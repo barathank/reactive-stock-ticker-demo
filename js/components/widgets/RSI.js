@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Spinner} from 'elemental';
 
-import RSIFilter from '../../data/filters/RSI';
+import RSIFilter from '../../data/queries/RSI';
 
 import BaseWidget from './BaseWidget';
 import Header from './WidgetHeader';
