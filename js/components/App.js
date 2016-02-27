@@ -6,13 +6,10 @@ import * as reducers from '../reducers/index';
 
 // Devtools
 import thunk from 'redux-thunk';
-import { devTools, persistState } from 'redux-devtools';
-import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 
 const finalCreateStore = compose(
   applyMiddleware(thunk),
-  devTools(),
-  persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/)),
+  window.devToolsExtension ? window.devToolsExtension() : f => f,
   createStore
 );
 
@@ -21,15 +18,9 @@ const store = finalCreateStore(combineReducers(reducers));
 export default React.createClass({
   render() {
     return (
-      <div>
-        <Provider store={store}>
-          {() => <TickerApp /> }
-        </Provider>
-        <DebugPanel top right bottom>
-          <DevTools store={store}
-                    monitor={LogMonitor} />
-        </DebugPanel>
-      </div>
+      <Provider store={store}>
+        {() => <TickerApp /> }
+      </Provider>
     );
   }
 });
