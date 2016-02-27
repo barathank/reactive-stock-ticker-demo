@@ -1,7 +1,7 @@
 import React from 'react';
 import {Alert} from 'elemental';
 
-export default class BaseWidget {
+export default class BaseWidget extends React.Component {
   static defaultProps = {
     type: 'success'
   }

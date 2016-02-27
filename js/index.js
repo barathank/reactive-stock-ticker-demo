@@ -1,7 +1,5 @@
 import React from 'react';
+import {render} from 'react-dom';
 import App from './components/App';
 
-var scoreboard = document.getElementById('scoreboard'),
-    main = document.getElementById('main');
-
-React.render(<App />, main);
+render(<App />, document.getElementById('main'));

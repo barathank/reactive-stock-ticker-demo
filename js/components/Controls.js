@@ -5,7 +5,7 @@ import BaseWidget from './widgets/BaseWidget';
 import WidgetHeader from './widgets/WidgetHeader';
 import {Button} from 'elemental';
 
-export default class Controls {
+export default class Controls extends React.Component {
   static propTypes = {
     actions: React.PropTypes.object.isRequired,
     recording: React.PropTypes.bool

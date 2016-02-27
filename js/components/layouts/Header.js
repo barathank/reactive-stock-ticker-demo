@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Header {
+export default class Header extends React.Component {
   render() {
     const {children} = this.props;
     return (

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Sidebar {
+export default class Sidebar extends React.Component {
   render() {
     const {children} = this.props;
     return (

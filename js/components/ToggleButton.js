@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button} from 'elemental';
 
-export default class ToggleButton {
+export default class ToggleButton extends React.Component {
   static propTypes = {
     recording: React.PropTypes.bool
   }

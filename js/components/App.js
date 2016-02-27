@@ -9,9 +9,8 @@ import thunk from 'redux-thunk';
 
 const finalCreateStore = compose(
   applyMiddleware(thunk),
-  window.devToolsExtension ? window.devToolsExtension() : f => f,
-  createStore
-);
+  window.devToolsExtension ? window.devToolsExtension() : f => f
+)(createStore);
 
 const store = finalCreateStore(combineReducers(reducers));
 
@@ -19,7 +18,7 @@ export default React.createClass({
   render() {
     return (
       <Provider store={store}>
-        {() => <TickerApp /> }
+        <TickerApp />
       </Provider>
     );
   }

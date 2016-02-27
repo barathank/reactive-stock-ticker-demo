@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Main {
+export default class Main extends React.Component {
   render() {
     const {children} = this.props;
     return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Spinner} from 'elemental';
 
-export default class WidgetHeader {
+export default class WidgetHeader extends React.Component {
   static propTypes = {
     loading: React.PropTypes.bool.isRequired
   }

@@ -7,7 +7,7 @@ import RSIFilter from '../../data/queries/RSI';
 import BaseWidget from './BaseWidget';
 import Header from './WidgetHeader';
 
-class RSI {
+class RSI extends React.Component {
   static propTypes = {
     rsi: React.PropTypes.array.isRequired
   }

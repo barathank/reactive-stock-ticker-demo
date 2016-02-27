@@ -5,7 +5,7 @@ import {Spinner} from 'elemental';
 import OpeningPricesFilter from '../../data/queries/OpeningPrices';
 import BaseWidget from './BaseWidget';
 
-class OpeningPrices {
+class OpeningPrices extends React.Component {
   static propTypes = {
     prices: React.PropTypes.array.isRequired
   }
