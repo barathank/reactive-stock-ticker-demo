@@ -36,7 +36,7 @@ class RSI extends React.Component {
         <Header>RSI</Header>
         <ul>
           {rsi.map(({ticker, rsi}) =>
-            <li>{ticker}: {rsi}</li>
+            <li key={ticker}>{ticker}: {rsi}</li>
           )}
         </ul>
       </BaseWidget>
