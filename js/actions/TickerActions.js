@@ -1,11 +1,8 @@
 import * as ActionTypes from '../constants/ActionTypes';
 import {SYMBOLS} from '../constants/Config';
+import stockService from '../data/stock-service';
 
-// TODO: move this to an initializable data service
-const pubnub = PUBNUB.init({
-  subscribe_key: 'demo',
-  publish_key: 'demo'
-});
+const ticker = stockService();
 
 export function initialize() {
   console.log('App Initialized');
@@ -52,17 +49,12 @@ export function receiveData(data, raw, symbol) {
 }
 
 export function startTicker(callback) {
-  pubnub.subscribe({
-    channel: SYMBOLS,
-    message: callback
-  });
+  ticker.start(callback);
   return { type: ActionTypes.TICKER_STARTED };
 }
 
 export function stopTicker() {
-  pubnub.unsubscribe({
-    channel: SYMBOLS
-  });
+  ticker.stop();
   return { type: ActionTypes.TICKER_STOPPED };
 }
 
