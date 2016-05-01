@@ -9,7 +9,18 @@
 
   <div id="main"></div>
 
-  <script src="http://cdn.pubnub.com/pubnub.min.js"></script>
   <script src="./js/bundle.js"></script>
+  <script src="//localhost:8181/horizon/horizon.js"></script>
+  <script>
+    const horizon = Horizon({host: 'localhost:8181'});
+    horizon.onConnected(function() {
+      console.log('Conected to Horizon...');
+    });
+    horizon.connect();
+    const messages = horizon('tv_shows');
+    messages.watch(function(thing) {
+      console.log('THINGS!', thing);
+    });
+  </script>
 </body>
 </html>
