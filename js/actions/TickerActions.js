@@ -3,9 +3,12 @@ import {SYMBOLS} from '../constants/Config';
 import stockService from '../data/stock-service';
 import {watch} from './HorizonActions';
 
+let ticker;
+
 export function initialize() {
   return (dispatch, getState) => {
     dispatch(watch('transactions', {raw: true}))
+    ticker = stockService(dispatch);
     console.log('App Initialized');
   }
 }
@@ -32,8 +35,6 @@ export function saveModal(chaos, minTrans) {
     dispatch({type: ActionTypes.MODAL_CANCELED});
   }
 }
-
-let ticker = stockService();
 
 export function startTicker() {
   ticker.start();

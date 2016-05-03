@@ -10,11 +10,7 @@ export default function(state=defaultState, action) {
     case DATA_RECEIVED:
       const data = action.payload;
       data.key = data.time+data.ticker+data.price;
-      // if (Math.random() > getState().Ticker.chaosFactor) {
-      //   data.category = 'loss';
-      // } else {
-        data.category = data.perc < 0 ? 'loss' : 'gain';
-      // }
+      data.category = data.perc < 0 ? 'loss' : 'gain';
       return { ...state, all: [...state.all, action.payload] };
     case DATA_RESET:
       return { all: [], byStock: {} };

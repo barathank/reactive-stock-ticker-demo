@@ -14,7 +14,7 @@ export default (config={}, Horizon=window.Horizon) => {
   return store => {
     instance.onReady(() => {
       store.dispatch({
-        type: `${PREFIX}.ready`,
+        type: getType('ready'),
         payload: instance
       });
     });
@@ -39,8 +39,10 @@ export default (config={}, Horizon=window.Horizon) => {
       if (action.type === getType('store')) {
         const {collection, data} = action.payload;
         instance(collection).store(data).forEach(
-          id =>  store.dispatch({type: PREFIX + '.store.success', payload: {store, id}}),
-          err => store.dispatch({type: PREFIX + '.store.failure', payload: {store, err}})
+          id => next({
+            type: getType('store.success'),
+            payload: {collection, id}
+          })
         );
       }
     }
