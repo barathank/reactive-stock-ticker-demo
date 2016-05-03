@@ -1,11 +1,13 @@
 import * as ActionTypes from '../constants/ActionTypes';
 import {SYMBOLS} from '../constants/Config';
 import stockService from '../data/stock-service';
-
-const ticker = stockService();
+import {watch} from './HorizonActions';
 
 export function initialize() {
-  console.log('App Initialized');
+  return (dispatch, getState) => {
+    dispatch(watch('transactions', {raw: true}))
+    console.log('App Initialized');
+  }
 }
 
 export function setMinTransactions(num) {
@@ -31,25 +33,10 @@ export function saveModal(chaos, minTrans) {
   }
 }
 
-// TODO: best practive for triggering this?
-export function receiveData(data, raw, symbol) {
-  return (dispatch, getState) => {
-    data.ticker = symbol;
-    data.key = data.time+data.ticker+data.price;
-    if (Math.random() > getState().Ticker.chaosFactor) {
-      data.category = 'loss';
-    } else {
-      data.category = data.perc < 0 ? 'loss' : 'gain';
-    }
-    dispatch({
-      type: ActionTypes.DATA_RECEIVED,
-      data
-    });
-  };
-}
+let ticker = stockService();
 
-export function startTicker(callback) {
-  ticker.start(callback);
+export function startTicker() {
+  ticker.start();
   return { type: ActionTypes.TICKER_STARTED };
 }
 

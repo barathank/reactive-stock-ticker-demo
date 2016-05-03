@@ -18,8 +18,8 @@ export default class Controls extends React.Component {
   toggle(recording, actions) {
     return e => {
       recording
-        ? actions.stopTicker(e)
-        : actions.startTicker(actions.receiveData);
+        ? actions.stopTicker()
+        : actions.startTicker();
     }
   }
 

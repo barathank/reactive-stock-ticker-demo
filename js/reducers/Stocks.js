@@ -5,7 +5,7 @@ let defaultState = {};
 export default function(state = defaultState, action) {
   switch (action.type) {
     case DATA_RECEIVED:
-      const {ticker, price} = action.data;
+      const {ticker, price} = action.payload;
       let newData;
       // TODO: create Stock model
       if (!state[ticker]) {
