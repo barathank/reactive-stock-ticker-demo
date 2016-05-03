@@ -1,4 +1,5 @@
 // Adapted from https://github.com/pubnub/real-time-stocks/blob/master/php-broadcaster/stock.php
+// import Horizon from '@horizon/client';
 
 let PRICES = {
   FB: 107.92,
@@ -41,6 +42,9 @@ const formatMoney = num =>
 export default function getTicker() {
   let interval, running = false;
 
+  const horizon = Horizon({host: 'localhost:8181', authType: 'unauthenticated'});
+  horizon.connect();
+
   const getTransaction = ticker => {
     const vol = getRandom(100, 1000) * 10;
     const time = formatTime(new Date());
@@ -60,7 +64,7 @@ export default function getTicker() {
       running = true;
       interval = setInterval(() => {
         const ticker = getRandomCompany();
-        callback(getTransaction(ticker), {}, ticker);
+        horizon('transactions').store(getTransaction(ticker));
       }, 250);
     },
 
