@@ -1,8 +1,5 @@
 import * as ActionTypes from '../constants/ActionTypes';
-import {SYMBOLS} from '../constants/Config';
 import {watch, unwatch} from './HorizonActions';
-
-let ticker;
 
 export function initialize() {
   return (dispatch, getState) => {

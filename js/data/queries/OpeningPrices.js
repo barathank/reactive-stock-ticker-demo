@@ -1,5 +1,4 @@
 import {createSelector} from 'reselect';
-import {SYMBOLS} from '../../constants/Config';
 import {values} from 'lodash';
 
 export default state => {

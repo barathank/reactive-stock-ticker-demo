@@ -28,14 +28,16 @@ export default (config={}, Horizon=window.Horizon) => {
 
       if (action.type === getType('watch')) {
         const {collection, raw=false} = action.payload;
-        subscriptions[collection] = instance(collection).watch({ rawChanges: !!raw }).subscribe(({new_val, type}) => {
-          if (type === 'add') {
-            next({
-              type: getType(collection + '.added'),
-              payload: new_val
-            });
-          }
-        });
+        subscriptions[collection] = instance(collection)
+          .watch({ rawChanges: !!raw })
+          .subscribe(({new_val, type}) => {
+            if (type === 'add') {
+              next({
+                type: getType(collection + '.added'),
+                payload: new_val
+              });
+            }
+          });
       }
 
       if (action.type === getType('unwatch')) {

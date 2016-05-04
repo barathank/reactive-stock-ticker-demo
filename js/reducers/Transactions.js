@@ -1,9 +1,6 @@
 import {DATA_RECEIVED, DATA_RESET} from '../constants/ActionTypes';
 
-let defaultState = {
-  all: [],
-  byStock: {}
-};
+let defaultState = [];
 
 export default function(state=defaultState, action) {
   switch(action.type) {
@@ -11,9 +8,9 @@ export default function(state=defaultState, action) {
       const data = action.payload;
       data.key = data.time+data.ticker+data.price;
       data.category = data.perc < 0 ? 'loss' : 'gain';
-      return { ...state, all: [...state.all, action.payload] };
+      return [...state, action.payload];
     case DATA_RESET:
-      return { all: [], byStock: {} };
+      return defaultState;
     default:
       return state;
   }

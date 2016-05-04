@@ -1,10 +1,10 @@
 import {createSelector} from 'reselect';
 
-export default state => {
-  const {all} = state.Transactions;
-  const transactions = (all.length < 13)
-    ? all
-    : all.slice(all.length-13)
+const getLast13 = trans =>
+  trans.length < 13 ? trans : trans.slice(trans.length - 13);
 
-  return {transactions};
+export default state => {
+  return {
+    transactions: getLast13(state.Transactions)
+  };
 }
