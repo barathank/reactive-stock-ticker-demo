@@ -16,3 +16,10 @@ export const watch = (collection, opts={}) => {
     }
   };
 }
+
+export const unwatch = collection => {
+  return {
+    type: '@horizon.unwatch',
+    payload: collection
+  };
+};

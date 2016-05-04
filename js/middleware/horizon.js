@@ -19,6 +19,8 @@ export default (config={}, Horizon=window.Horizon) => {
       });
     });
 
+    const subscriptions = {};
+
     return next => action => {
       if (!isHorizonAction(action)) {
         return next(action);
@@ -26,7 +28,7 @@ export default (config={}, Horizon=window.Horizon) => {
 
       if (action.type === getType('watch')) {
         const {collection, raw=false} = action.payload;
-        instance(collection).watch({ rawChanges: !!raw }).forEach(({new_val, type}) => {
+        subscriptions[collection] = instance(collection).watch({ rawChanges: !!raw }).subscribe(({new_val, type}) => {
           if (type === 'add') {
             next({
               type: getType(collection + '.added'),
@@ -34,6 +36,13 @@ export default (config={}, Horizon=window.Horizon) => {
             });
           }
         });
+      }
+
+      if (action.type === getType('unwatch')) {
+        const collection = action.payload;
+        const sub = subscriptions[collection];
+        delete subscriptions[collection];
+        sub.unsubscribe();
       }
 
       if (action.type === getType('store')) {

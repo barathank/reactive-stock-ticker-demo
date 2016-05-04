@@ -1,14 +1,11 @@
 import * as ActionTypes from '../constants/ActionTypes';
 import {SYMBOLS} from '../constants/Config';
-import stockService from '../data/stock-service';
-import {watch} from './HorizonActions';
+import {watch, unwatch} from './HorizonActions';
 
 let ticker;
 
 export function initialize() {
   return (dispatch, getState) => {
-    dispatch(watch('transactions', {raw: true}))
-    ticker = stockService(dispatch);
     console.log('App Initialized');
   }
 }
@@ -37,13 +34,17 @@ export function saveModal(chaos, minTrans) {
 }
 
 export function startTicker() {
-  ticker.start();
-  return { type: ActionTypes.TICKER_STARTED };
+  return (dispatch) => {
+    dispatch({ type: ActionTypes.TICKER_STARTED });
+    dispatch(watch('transactions', {raw: true}));
+  };
 }
 
 export function stopTicker() {
-  ticker.stop();
-  return { type: ActionTypes.TICKER_STOPPED };
+  return dispatch => {
+    dispatch(unwatch('transactions'));
+    dispatch({ type: ActionTypes.TICKER_STOPPED });
+  };
 }
 
 export function reset() {
