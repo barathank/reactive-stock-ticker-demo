@@ -2,7 +2,7 @@ import {createSelector} from 'reselect';
 
 const settings = state => state.Ticker;
 const stocks = state => state.Stocks;
-const transactions = state => state.Transactions.all;
+const transactions = state => state.Transactions;
 const empty = [];
 
 const qualifyingStocks = createSelector(
