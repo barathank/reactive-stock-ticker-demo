@@ -1,10 +1,14 @@
 'use strict';
+const args = process.argv.slice(2);
+const port = args[0];
+
 const thinky = require('thinky')({
   host: "localhost",
-  port: 59778,
+  port: port,
   authKey: "",
   db: "horizon"
 });
+
 const type = thinky.type;
 const getTransaction = require('./getTransaction');
 
