@@ -1,25 +1,25 @@
 import React from 'react';
 import TickerApp from './TickerApp';
-import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
+import {createStore, applyMiddleware, compose} from 'redux';
 import {Provider} from 'react-redux';
-import * as reducers from '../reducers/index';
+import reducers from '../reducers';
 import {initialize} from '../actions/TickerActions';
 import 'babel-polyfill';
-import {Horizon} from '../sagas';
+import {rootSaga} from '../sagas';
 
 // middleware
 import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 const sagaMiddleware = createSagaMiddleware();
 
-const finalCreateStore = compose(
-  applyMiddleware(
-    thunk, sagaMiddleware
-  ),
+const store = createStore(reducers, compose(
+  applyMiddleware(thunk, sagaMiddleware),
   window.devToolsExtension ? window.devToolsExtension() : f => f
-)(createStore);
+));
 
-const store = finalCreateStore(combineReducers(reducers));
+sagaMiddleware.run(rootSaga);
+
+store.dispatch(initialize());
 
 export default React.createClass({
   render() {
@@ -30,7 +30,3 @@ export default React.createClass({
     );
   }
 });
-
-sagaMiddleware.run(Horizon.bind(null, store));
-
-store.dispatch(initialize());

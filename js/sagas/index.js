@@ -1,3 +1,3 @@
 import Horizon from './Horizon';
 
-export {Horizon};
+export const rootSaga = Horizon;

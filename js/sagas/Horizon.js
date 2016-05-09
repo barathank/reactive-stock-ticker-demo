@@ -7,7 +7,10 @@ import * as TickerActions from '../actions/TickerActions';
 const getType = (suffix) =>
   ['@horizon', suffix].join('.');
 
-const defaultConfig = {host: 'localhost:8181', authType: 'unauthenticated'};
+const defaultConfig = {
+  host: 'localhost:8181',
+  authType: 'unauthenticated'
+};
 
 const TickerClient = (config=defaultConfig) => {
   const horizon = Horizon(config);

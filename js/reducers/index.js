@@ -1,3 +1,8 @@
-export {default as Ticker} from './Ticker';
-export {default as Stocks} from './Stocks';
-export {default as Transactions} from './Transactions';
+import { combineReducers } from 'redux';
+import Ticker from './Ticker';
+import Stocks from './Stocks';
+import Transactions from './Transactions';
+
+export default combineReducers({
+  Ticker, Stocks, Transactions
+});
