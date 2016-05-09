@@ -30,7 +30,7 @@ const TickerClient = (config=defaultConfig) => {
         const subscription = collection
           .above({timestamp: new Date()})
           .watch({ rawChanges: true })
-          .subscribe(function ({new_val, type}) {
+          .subscribe(({new_val, type}) => {
             if (type === 'add') {
               emit(new_val);
             }
@@ -54,7 +54,7 @@ export function* handleAppInit(client) {
   });
 }
 
-function* handleTransactionEvents(client) {
+function* handleTransactionStream(client) {
   const channel = yield call(client.watch);
   try {
     while (true) {
@@ -66,11 +66,12 @@ function* handleTransactionEvents(client) {
   }
 }
 
-export function* handleTicker(client) {
+export function* handleTickerStarted(client) {
   while (true) {
     yield take(ActionTypes.TICKER_STARTED);
+    // TICKER_STOPPED action cancels the stream subscription
     yield race({
-      ticker: call(handleTransactionEvents, client),
+      ticker: call(handleTransactionStream, client),
       cancel: take(ActionTypes.TICKER_STOPPED)
     });
   }
@@ -81,6 +82,6 @@ export default function* () {
 
   yield [
     handleAppInit(client),
-    handleTicker(client)
+    handleTickerStarted(client)
   ];
 }
