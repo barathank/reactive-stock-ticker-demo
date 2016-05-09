@@ -1,5 +1,5 @@
 import { takeEvery, takeLatest } from 'redux-saga';
-import { call, put } from 'redux-saga/effects';
+import { call, put, take } from 'redux-saga/effects';
 import * as ActionTypes from '../constants/ActionTypes';
 import * as TickerActions from '../actions/TickerActions';
 
@@ -61,15 +61,12 @@ export function* handleAppInit(client) {
   }
 }
 
-export function* handleTickerStopped(client) {
-  while(true) {
-    yield takeEvery(ActionTypes.TICKER_STOPPED, client.unwatch);
-  }
-}
-
-export function* handleTickerStarted(client) {
-  while(true) {
-    yield takeEvery(ActionTypes.TICKER_STARTED, client.watch);
+export function* handleTickerToggle(client) {
+  while (true) {
+    yield take(ActionTypes.TICKER_STARTED);
+    yield call(client.watch);
+    yield take(ActionTypes.TICKER_STOPPED);
+    yield call(client.unwatch);
   }
 }
 
@@ -79,7 +76,6 @@ export default function* ({dispatch}) {
 
   yield [
     handleAppInit(client),
-    handleTickerStarted(client),
-    handleTickerStopped(client)
+    handleTickerToggle(client)
   ];
 }
