@@ -48,6 +48,6 @@ module.exports = function getTransaction() {
   const delta = formatMoney(change);
 
   return {
-    ticker, time, price, delta, perc, vol
+    ticker, time, price, delta, perc, vol, timestamp: new Date()
   };
 };
