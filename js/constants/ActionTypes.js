@@ -4,6 +4,5 @@ export const TICKER_STOPPED = 'TICKER_STOPPED';
 export const DATA_RECEIVED = '@horizon.transactions.added';
 export const DATA_RESET = 'DATA_RESET';
 export const SET_MIN_TRANS = 'SET_MIN_TRANS';
-export const SET_CHAOS = 'SET_CHAOS';
 export const MODAL_OPENED = 'MODAL_OPENED';
 export const MODAL_CANCELED = 'MODAL_CANCELED';

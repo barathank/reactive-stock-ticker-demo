@@ -27,8 +27,7 @@ class TickerApp extends Component {
     transactions: PropTypes.array.isRequired,
     recording: PropTypes.bool.isRequired,
     settingsModal: PropTypes.bool,
-    minTransactions: PropTypes.number.isRequired,
-    chaosFactor: PropTypes.number.isRequired
+    minTransactions: PropTypes.number.isRequired
   }
 
   static defaultProps = {
@@ -38,7 +37,7 @@ class TickerApp extends Component {
   }
 
   render() {
-    const {recording, settingsModal, transactions, minTransactions, chaosFactor} = this.props;
+    const {recording, settingsModal, transactions, minTransactions} = this.props;
     return (
       <Page>
         <Header>
@@ -64,7 +63,6 @@ class TickerApp extends Component {
           onSave={this.actions.saveModal}
           onCancel={this.actions.cancelModal}
           minTransactions={minTransactions}
-          chaosFactor={chaosFactor}
         />
       </Page>
     );

@@ -20,10 +20,9 @@ export function openModal() {
   return {type: ActionTypes.MODAL_OPENED};
 }
 
-export function saveModal(chaos, minTrans) {
+export function saveModal(minTrans) {
   return (dispatch) => {
     dispatch({type: ActionTypes.SET_MIN_TRANS, value: minTrans});
-    dispatch({type: ActionTypes.SET_CHAOS, value: chaos});
     dispatch({type: ActionTypes.MODAL_CANCELED});
   }
 }
