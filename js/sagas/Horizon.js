@@ -53,7 +53,7 @@ const TickerClient = (dispatch, config=defaultConfig) => {
 export function* handleAppInit(client) {
   while(true) {
     yield takeLatest(ActionTypes.APP_STARTED, function*() {
-      yield client.connect();
+      yield call(client.connect);
       yield put({
         type: getType('ready'), payload: client
       });
