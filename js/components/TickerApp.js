@@ -13,7 +13,6 @@ import Page from './layouts/Page';
 import Main from './layouts/Main';
 import Header from './layouts/Header';
 import Sidebar from './layouts/Sidebar';
-import Footer from './layouts/Footer';
 import Controls from './Controls';
 import SettingsModal from './modals/Settings';
 
@@ -59,7 +58,7 @@ class TickerApp extends Component {
             <Controls recording={recording} actions={this.actions} />
           </Sidebar>
         </Main>
-        <Footer />
+        <hr />
         <SettingsModal
           isOpen={settingsModal}
           onSave={this.actions.saveModal}
