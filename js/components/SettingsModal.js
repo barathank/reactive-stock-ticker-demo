@@ -12,25 +12,20 @@ export default class Settings extends Component {
     super(props);
     this.handleSave = this.handleSave.bind(this);
     this.handleMinChange = this.handleMinChange.bind(this);
-    this.handleChaosChange = this.handleChaosChange.bind(this);
-    this.state = {min: 0, chaos: 0.5};
+    this.state = {min: 0};
   }
 
   handleSave(e) {
-    const {min, chaos} = this.state;
-    this.props.onSave(chaos, min);
+    const {min} = this.state;
+    this.props.onSave(min);
   }
 
   handleMinChange(e) {
     this.setState({min: e.target.value});
   }
 
-  handleChaosChange(e) {
-    this.setState({chaos: e.target.value});
-  }
-
   render() {
-    const {isOpen, onCancel, onSave, minTransactions, chaosFactor} = this.props;
+    const {isOpen, onCancel, onSave, minTransactions} = this.props;
     return (
       <Modal isOpen={isOpen} onCancel={onCancel} backdropClosesModal>
         <ModalHeader text="Settings" onClose={onCancel} showCloseButton />
@@ -38,9 +33,6 @@ export default class Settings extends Component {
           <FormRow>
             <FormField width="one-half" label="Min. Transactions for RSI" className="form-field">
               <FormInput ref="min" defaultValue={minTransactions} placeholder="Minimum Transactions Needed for RSI" onChange={this.handleMinChange} />
-            </FormField>
-            <FormField width="one-half" label="Chaos Factor" className="form-field">
-              <FormInput ref="chaos" defaultValue={chaosFactor} onChange={this.handleChaosChange} />
             </FormField>
           </FormRow>
         </ModalBody>

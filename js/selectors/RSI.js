@@ -1,9 +1,8 @@
 import {createSelector} from 'reselect';
-import {SYMBOLS} from '../../constants/Config';
 
 const settings = state => state.Ticker;
 const stocks = state => state.Stocks;
-const transactions = state => state.Transactions.all;
+const transactions = state => state.Transactions;
 const empty = [];
 
 const qualifyingStocks = createSelector(
@@ -12,8 +11,6 @@ const qualifyingStocks = createSelector(
     return Object.keys(stocks).filter(stock =>
       stocks[stock].numTrans >= settings.minTransactions
     );
-    // debugger
-    // return results.length ? results : empty;
   }
 );
 

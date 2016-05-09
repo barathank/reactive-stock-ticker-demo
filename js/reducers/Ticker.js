@@ -3,15 +3,13 @@ import {
   TICKER_STOPPED,
   MODAL_OPENED,
   MODAL_CANCELED,
-  SET_MIN_TRANS,
-  SET_CHAOS
-} from '../constants/ActionTypes';
+  SET_MIN_TRANS
+} from '../actions/ActionTypes';
 
 let defaultState = {
   recording: false,
   settingsModal: false,
-  minTransactions: 14,
-  chaosFactor: 0.5
+  minTransactions: 14
 };
 
 export default function(state=defaultState, action) {
@@ -27,9 +25,6 @@ export default function(state=defaultState, action) {
 
     case MODAL_OPENED:
       return {...state, settingsModal: true};
-
-    case SET_CHAOS:
-      return {...state, chaosFactor: parseFloat(action.value)};
 
     case SET_MIN_TRANS:
       return {...state, minTransactions: parseInt(action.value)};

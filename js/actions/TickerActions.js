@@ -1,11 +1,8 @@
-import * as ActionTypes from '../constants/ActionTypes';
-import {SYMBOLS} from '../constants/Config';
-import stockService from '../data/stock-service';
-
-const ticker = stockService();
+import * as ActionTypes from '../actions/ActionTypes';
 
 export function initialize() {
   console.log('App Initialized');
+  return { type: ActionTypes.APP_STARTED };
 }
 
 export function setMinTransactions(num) {
@@ -23,38 +20,18 @@ export function openModal() {
   return {type: ActionTypes.MODAL_OPENED};
 }
 
-export function saveModal(chaos, minTrans) {
+export function saveModal(minTrans) {
   return (dispatch) => {
     dispatch({type: ActionTypes.SET_MIN_TRANS, value: minTrans});
-    dispatch({type: ActionTypes.SET_CHAOS, value: chaos});
     dispatch({type: ActionTypes.MODAL_CANCELED});
   }
 }
 
-// TODO: best practive for triggering this?
-export function receiveData(data, raw, symbol) {
-  return (dispatch, getState) => {
-    data.ticker = symbol;
-    data.key = data.time+data.ticker+data.price;
-    if (Math.random() > getState().Ticker.chaosFactor) {
-      data.category = 'loss';
-    } else {
-      data.category = data.perc < 0 ? 'loss' : 'gain';
-    }
-    dispatch({
-      type: ActionTypes.DATA_RECEIVED,
-      data
-    });
-  };
-}
-
-export function startTicker(callback) {
-  ticker.start(callback);
+export function startTicker() {
   return { type: ActionTypes.TICKER_STARTED };
 }
 
 export function stopTicker() {
-  ticker.stop();
   return { type: ActionTypes.TICKER_STOPPED };
 }
 

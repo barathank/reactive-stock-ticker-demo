@@ -4,7 +4,7 @@ import styles from '../../css/styles.css';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/TickerActions';
-import VisiblePrices from '../data/queries/VisiblePrices';
+import VisiblePrices from '../selectors/VisiblePrices';
 
 import Ticker from './Ticker';
 import OpeningPrices from './widgets/OpeningPrices';
@@ -13,9 +13,8 @@ import Page from './layouts/Page';
 import Main from './layouts/Main';
 import Header from './layouts/Header';
 import Sidebar from './layouts/Sidebar';
-import Footer from './layouts/Footer';
 import Controls from './Controls';
-import SettingsModal from './modals/Settings';
+import SettingsModal from './SettingsModal';
 
 
 class TickerApp extends Component {
@@ -28,8 +27,7 @@ class TickerApp extends Component {
     transactions: PropTypes.array.isRequired,
     recording: PropTypes.bool.isRequired,
     settingsModal: PropTypes.bool,
-    minTransactions: PropTypes.number.isRequired,
-    chaosFactor: PropTypes.number.isRequired
+    minTransactions: PropTypes.number.isRequired
   }
 
   static defaultProps = {
@@ -39,7 +37,7 @@ class TickerApp extends Component {
   }
 
   render() {
-    const {recording, settingsModal, transactions, minTransactions, chaosFactor} = this.props;
+    const {recording, settingsModal, transactions, minTransactions} = this.props;
     return (
       <Page>
         <Header>
@@ -59,13 +57,12 @@ class TickerApp extends Component {
             <Controls recording={recording} actions={this.actions} />
           </Sidebar>
         </Main>
-        <Footer />
+        <hr />
         <SettingsModal
           isOpen={settingsModal}
           onSave={this.actions.saveModal}
           onCancel={this.actions.cancelModal}
           minTransactions={minTransactions}
-          chaosFactor={chaosFactor}
         />
       </Page>
     );
