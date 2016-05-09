@@ -1,5 +1,4 @@
 import * as ActionTypes from '../constants/ActionTypes';
-import {watch, unwatch} from './HorizonActions';
 
 export function initialize() {
   console.log('App Initialized');
@@ -30,17 +29,11 @@ export function saveModal(chaos, minTrans) {
 }
 
 export function startTicker() {
-  return (dispatch) => {
-    dispatch({ type: ActionTypes.TICKER_STARTED });
-    dispatch(watch('transactions', {raw: true}));
-  };
+  return { type: ActionTypes.TICKER_STARTED };
 }
 
 export function stopTicker() {
-  return dispatch => {
-    dispatch(unwatch('transactions'));
-    dispatch({ type: ActionTypes.TICKER_STOPPED });
-  };
+  return { type: ActionTypes.TICKER_STOPPED };
 }
 
 export function reset() {
