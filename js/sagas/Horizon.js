@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest } from 'redux-saga';
+import { eventChannel, END, takeLatest } from 'redux-saga';
 import { call, put, take } from 'redux-saga/effects';
 import * as ActionTypes from '../constants/ActionTypes';
 import * as TickerActions from '../actions/TickerActions';
@@ -10,10 +10,11 @@ const getType = (suffix) =>
 
 const defaultConfig = {host: 'localhost:8181', authType: 'unauthenticated'};
 
-const TickerClient = (dispatch, config=defaultConfig) => {
+const TickerClient = (config=defaultConfig) => {
   const COLLECTION = 'transactions';
   const subscriptions = {};
   const instance = Horizon(config);
+  let activeListener;
 
   return {
     connect() {
@@ -28,20 +29,25 @@ const TickerClient = (dispatch, config=defaultConfig) => {
       });
     },
 
-    watch() {
-      subscriptions[COLLECTION] = instance(COLLECTION)
-        .watch({ rawChanges: true })
-        .subscribe(function ({new_val, type}) {
-          if (type === 'add') {
-            dispatch({
-              type: getType(COLLECTION + '.added'),
-              payload: new_val
-            });
-          }
-        });
+    watch: function() {
+      return eventChannel(listener => {
+        activeListener = listener;
+        subscriptions[COLLECTION] = instance(COLLECTION)
+          .watch({ rawChanges: true })
+          .subscribe(function ({new_val, type}) {
+            if (type === 'add') {
+              listener(new_val);
+            }
+          });
+
+        return () => {
+          /* unsubscribe would go here */
+        };
+      });
     },
 
     unwatch() {
+      activeListener(END);
       const sub = subscriptions[COLLECTION];
       delete subscriptions[COLLECTION];
       sub.unsubscribe();
@@ -51,31 +57,45 @@ const TickerClient = (dispatch, config=defaultConfig) => {
 
 
 export function* handleAppInit(client) {
-  while(true) {
-    yield takeLatest(ActionTypes.APP_STARTED, function*() {
-      yield call(client.connect);
-      yield put({
-        type: getType('ready'), payload: client
-      });
-    });
+  yield take(ActionTypes.APP_STARTED);
+  yield call(client.connect);
+  yield put({
+    type: getType('ready'), payload: client
+  });
+}
+
+function* handleTransactionEvents(client) {
+  const channel = yield call(client.watch);
+  try {
+    while (true) {
+      let action = yield take(channel);
+      yield put({type: ActionTypes.DATA_RECEIVED, payload: action})
+    }
+  } finally {
+    channel.close();
   }
 }
 
-export function* handleTickerToggle(client) {
+export function* handleTickerStart(client) {
   while (true) {
     yield take(ActionTypes.TICKER_STARTED);
-    yield call(client.watch);
+    yield handleTransactionEvents(client);
+  }
+}
+
+export function* handleTickerStop(client) {
+  while(true) {
     yield take(ActionTypes.TICKER_STOPPED);
     yield call(client.unwatch);
   }
 }
 
-export default function* ({dispatch}) {
-  const subscriptions = {};
-  const client = TickerClient(dispatch);
+export default function* () {
+  const client = TickerClient();
 
   yield [
     handleAppInit(client),
-    handleTickerToggle(client)
+    handleTickerStart(client),
+    handleTickerStop(client)
   ];
 }
