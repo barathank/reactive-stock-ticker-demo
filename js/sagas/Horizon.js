@@ -10,7 +10,6 @@ const defaultConfig = {
 
 const TickerClient = (config=defaultConfig) => {
   const horizon = Horizon(config);
-  const collection = horizon('transactions');
 
   return {
     connect() {
@@ -25,10 +24,9 @@ const TickerClient = (config=defaultConfig) => {
       });
     },
 
-    watch() {
+    watch(query) {
       return eventChannel(emit => {
-        const subscription = collection
-          .above({timestamp: new Date()})
+        const subscription = query(horizon)
           .watch({ rawChanges: true })
           .subscribe(({new_val, type}) => {
             if (type === 'add') {
@@ -55,7 +53,10 @@ export function* handleAppInit(client) {
 }
 
 function* handleTransactionStream(client) {
-  const channel = yield call(client.watch);
+  const channel = yield call(client.watch, horizon =>
+    horizon('transactions').above({timestamp: new Date()})
+  );
+
   try {
     while (true) {
       let action = yield take(channel);
