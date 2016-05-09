@@ -2,9 +2,8 @@ import * as ActionTypes from '../constants/ActionTypes';
 import {watch, unwatch} from './HorizonActions';
 
 export function initialize() {
-  return (dispatch, getState) => {
-    console.log('App Initialized');
-  }
+  console.log('App Initialized');
+  return { type: ActionTypes.APP_STARTED };
 }
 
 export function setMinTransactions(num) {

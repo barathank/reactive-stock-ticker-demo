@@ -4,22 +4,22 @@ import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import {Provider} from 'react-redux';
 import * as reducers from '../reducers/index';
 import {initialize} from '../actions/TickerActions';
+import 'babel-polyfill';
+import {Horizon} from '../sagas';
 
-// Devtools
+// middleware
 import thunk from 'redux-thunk';
-import horizon from '../middleware/horizon';
+import createSagaMiddleware from 'redux-saga';
+const sagaMiddleware = createSagaMiddleware();
 
 const finalCreateStore = compose(
   applyMiddleware(
-    thunk,
-    horizon({host: 'localhost:8181', authType: 'unauthenticated'})
+    thunk, sagaMiddleware
   ),
   window.devToolsExtension ? window.devToolsExtension() : f => f
 )(createStore);
 
 const store = finalCreateStore(combineReducers(reducers));
-
-store.dispatch(initialize());
 
 export default React.createClass({
   render() {
@@ -30,3 +30,7 @@ export default React.createClass({
     );
   }
 });
+
+sagaMiddleware.run(Horizon.bind(null, store));
+
+store.dispatch(initialize());

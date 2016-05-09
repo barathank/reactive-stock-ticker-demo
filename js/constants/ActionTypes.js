@@ -1,3 +1,4 @@
+export const APP_STARTED = 'APP_STARTED';
 export const TICKER_STARTED = 'TICKER_STARTED';
 export const TICKER_STOPPED = 'TICKER_STOPPED';
 export const DATA_RECEIVED = '@horizon.transactions.added';
