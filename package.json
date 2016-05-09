@@ -1,14 +1,16 @@
 {
   "name": "reactive-stock-ticker-demo",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Demo code for faux-realtime stock ticker application",
-  "main": "index.js",
+  "main": "js/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/banderson/reactive-stock-ticker-demo.git"
   },
   "keywords": [
     "react",
+    "redux",
+    "rethinkdb",
     "realtime",
     "stock-ticker",
     "stock",

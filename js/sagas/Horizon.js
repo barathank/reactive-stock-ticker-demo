@@ -3,10 +3,6 @@ import { call, put, race, take } from 'redux-saga/effects';
 import * as ActionTypes from '../constants/ActionTypes';
 import * as TickerActions from '../actions/TickerActions';
 
-
-const getType = (suffix) =>
-  ['@horizon', suffix].join('.');
-
 const defaultConfig = {
   host: 'localhost:8181',
   authType: 'unauthenticated'
@@ -54,7 +50,7 @@ export function* handleAppInit(client) {
   yield take(ActionTypes.APP_STARTED);
   yield call(client.connect);
   yield put({
-    type: getType('ready'), payload: client
+    type: '@horizon.ready', payload: client
   });
 }
 
