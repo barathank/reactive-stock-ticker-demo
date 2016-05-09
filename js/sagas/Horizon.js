@@ -1,6 +1,6 @@
 import { eventChannel, END } from 'redux-saga';
 import { call, put, race, take } from 'redux-saga/effects';
-import * as ActionTypes from '../constants/ActionTypes';
+import * as ActionTypes from '../actions/ActionTypes';
 import * as TickerActions from '../actions/TickerActions';
 
 const defaultConfig = {

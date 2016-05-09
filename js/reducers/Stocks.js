@@ -1,4 +1,4 @@
-import {DATA_RECEIVED, DATA_RESET} from '../constants/ActionTypes';
+import {DATA_RECEIVED, DATA_RESET} from '../actions/ActionTypes';
 
 let defaultState = {};
 

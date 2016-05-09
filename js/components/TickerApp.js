@@ -14,7 +14,7 @@ import Main from './layouts/Main';
 import Header from './layouts/Header';
 import Sidebar from './layouts/Sidebar';
 import Controls from './Controls';
-import SettingsModal from './modals/Settings';
+import SettingsModal from './SettingsModal';
 
 
 class TickerApp extends Component {

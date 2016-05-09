@@ -4,7 +4,7 @@ import {
   MODAL_OPENED,
   MODAL_CANCELED,
   SET_MIN_TRANS
-} from '../constants/ActionTypes';
+} from '../actions/ActionTypes';
 
 let defaultState = {
   recording: false,
