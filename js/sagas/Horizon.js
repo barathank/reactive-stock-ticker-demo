@@ -4,21 +4,21 @@ import * as ActionTypes from '../constants/ActionTypes';
 import * as TickerActions from '../actions/TickerActions';
 
 
-const PREFIX = '@horizon';
 const getType = (suffix) =>
-  [PREFIX, suffix].join('.');
+  ['@horizon', suffix].join('.');
 
 const defaultConfig = {host: 'localhost:8181', authType: 'unauthenticated'};
 
 const TickerClient = (config=defaultConfig) => {
-  const instance = Horizon(config);
+  const horizon = Horizon(config);
+  const collection = horizon('transactions');
 
   return {
     connect() {
       return new Promise((resolve, reject) => {
         try {
-          instance.connect();
-          instance.onReady(resolve);
+          horizon.connect();
+          horizon.onReady(resolve);
         } catch(err) {
           console.error('Horizon connection FAILED', err);
           reject(err);
@@ -27,12 +27,13 @@ const TickerClient = (config=defaultConfig) => {
     },
 
     watch() {
-      return eventChannel(listener => {
-        const subscription = instance('transactions')
+      return eventChannel(emit => {
+        const subscription = collection
+          .above({timestamp: new Date()})
           .watch({ rawChanges: true })
           .subscribe(function ({new_val, type}) {
             if (type === 'add') {
-              listener(new_val);
+              emit(new_val);
             }
           });
 

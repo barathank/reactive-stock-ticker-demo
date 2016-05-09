@@ -19,10 +19,12 @@ const Transaction = thinky.createModel('transactions', {
   price: Number,
   delta: Number,
   perc: Number,
-  vol: Number
+  vol: Number,
+  timestamp: Date
 });
 
 const save = data => {
+  data.timestamp = new Date();
   const trans = new Transaction(data);
   trans.save().then(
     result => {console.log('SAVE', result)}
