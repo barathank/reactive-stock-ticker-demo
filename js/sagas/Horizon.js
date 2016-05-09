@@ -1,5 +1,5 @@
-import { eventChannel, END, takeLatest } from 'redux-saga';
-import { call, put, take } from 'redux-saga/effects';
+import { eventChannel, END } from 'redux-saga';
+import { call, put, race, take } from 'redux-saga/effects';
 import * as ActionTypes from '../constants/ActionTypes';
 import * as TickerActions from '../actions/TickerActions';
 
@@ -11,10 +11,7 @@ const getType = (suffix) =>
 const defaultConfig = {host: 'localhost:8181', authType: 'unauthenticated'};
 
 const TickerClient = (config=defaultConfig) => {
-  const COLLECTION = 'transactions';
-  const subscriptions = {};
   const instance = Horizon(config);
-  let activeListener;
 
   return {
     connect() {
@@ -29,10 +26,9 @@ const TickerClient = (config=defaultConfig) => {
       });
     },
 
-    watch: function() {
+    watch() {
       return eventChannel(listener => {
-        activeListener = listener;
-        subscriptions[COLLECTION] = instance(COLLECTION)
+        const subscription = instance('transactions')
           .watch({ rawChanges: true })
           .subscribe(function ({new_val, type}) {
             if (type === 'add') {
@@ -40,17 +36,11 @@ const TickerClient = (config=defaultConfig) => {
             }
           });
 
+        // return unsubscribe func
         return () => {
-          /* unsubscribe would go here */
+          subscription.unsubscribe();
         };
       });
-    },
-
-    unwatch() {
-      activeListener(END);
-      const sub = subscriptions[COLLECTION];
-      delete subscriptions[COLLECTION];
-      sub.unsubscribe();
     }
   };
 };
@@ -76,17 +66,13 @@ function* handleTransactionEvents(client) {
   }
 }
 
-export function* handleTickerStart(client) {
+export function* handleTicker(client) {
   while (true) {
     yield take(ActionTypes.TICKER_STARTED);
-    yield handleTransactionEvents(client);
-  }
-}
-
-export function* handleTickerStop(client) {
-  while(true) {
-    yield take(ActionTypes.TICKER_STOPPED);
-    yield call(client.unwatch);
+    yield race({
+      ticker: call(handleTransactionEvents, client),
+      cancel: take(ActionTypes.TICKER_STOPPED)
+    });
   }
 }
 
@@ -95,7 +81,6 @@ export default function* () {
 
   yield [
     handleAppInit(client),
-    handleTickerStart(client),
-    handleTickerStop(client)
+    handleTicker(client)
   ];
 }
