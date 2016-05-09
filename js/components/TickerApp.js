@@ -4,7 +4,7 @@ import styles from '../../css/styles.css';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/TickerActions';
-import VisiblePrices from '../data/queries/VisiblePrices';
+import VisiblePrices from '../selectors/VisiblePrices';
 
 import Ticker from './Ticker';
 import OpeningPrices from './widgets/OpeningPrices';
